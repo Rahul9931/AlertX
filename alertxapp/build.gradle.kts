@@ -46,6 +46,6 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-//    implementation(project(":alertx"))
-    implementation("com.github.Rahul9931:AlertX:v1.0.0")
+    implementation(project(":alertx"))
+//    implementation("com.github.Rahul9931:AlertX:v1.0.0")
 }

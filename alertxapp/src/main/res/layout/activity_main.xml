@@ -8,15 +8,39 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/btn_toast"
+        android:id="@+id/btn_success"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="show toast"
+        android:layout_marginTop="30dp"
+        android:backgroundTint="#4CAF50"
+        android:text="show success"
         android:textSize="25sp"
-        android:backgroundTint="#F44336"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#FFEB3B"
+        android:layout_marginTop="30dp"
+        android:text="show info"
+        android:textSize="25sp"
+        app:layout_constraintEnd_toEndOf="@+id/btn_success"
+        app:layout_constraintStart_toStartOf="@+id/btn_success"
+        app:layout_constraintTop_toBottomOf="@+id/btn_success" />
+
+    <Button
+        android:id="@+id/btn_error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#F82D1F"
+        android:layout_marginTop="30dp"
+        android:text="show error"
+        android:textSize="25sp"
+        app:layout_constraintEnd_toEndOf="@+id/btn_info"
+        app:layout_constraintStart_toStartOf="@+id/btn_info"
+        app:layout_constraintTop_toBottomOf="@+id/btn_info" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
