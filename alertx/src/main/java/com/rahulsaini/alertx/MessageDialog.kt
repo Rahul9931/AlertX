@@ -8,15 +8,12 @@ import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.os.Handler
 import android.os.Looper
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.animation.doOnEnd
 import androidx.core.view.isVisible
 
 public class MessageDialog private constructor(
@@ -132,7 +129,7 @@ public class MessageDialog private constructor(
     public fun getDefaultIconForType(type: MessageType): Int {
         return when (type) {
             MessageType.SUCCESS -> R.drawable.check_circle_24
-            MessageType.INFO -> R.drawable.error_24
+            MessageType.INFO -> R.drawable.info_24
             MessageType.ERROR -> R.drawable.error_24
         }
     }

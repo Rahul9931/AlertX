@@ -11,24 +11,32 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.FrameLayout
+import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.ColorRes
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 
-object TopAlertX {
+object AlertXTop {
     data class MessageStyle(
-        val backgroundColor: Int = Color.WHITE,
+        @ColorRes val containerBackgroundColor: Int = com.rahulsaini.alertx.R.color.info,
         val textColor: Int = Color.WHITE,
-        val duration: Long = 2000
+        val duration: Long = 2000,
+        val showIcon: Boolean = true,
+        val iconResource: Int? = null,
+        val iconTint: Int = Color.WHITE
     )
 
     class GlobalConfig{
-        val successStyle: MessageStyle = MessageStyle(
-            backgroundColor = Color.GREEN
+        var successStyle: MessageStyle = MessageStyle(
+            containerBackgroundColor = com.rahulsaini.alertx.R.color.success
         )
-        val infoStyle: MessageStyle = MessageStyle(
-            backgroundColor = Color.YELLOW
+        var infoStyle: MessageStyle = MessageStyle(
+            containerBackgroundColor = com.rahulsaini.alertx.R.color.info
         )
-        val errorStyle: MessageStyle = MessageStyle(
-            backgroundColor = Color.RED
+        var errorStyle: MessageStyle = MessageStyle(
+            containerBackgroundColor = com.rahulsaini.alertx.R.color.error
         )
     }
 
@@ -63,7 +71,11 @@ object TopAlertX {
 
         fun show(){
             val finalStyle = customStyle ?: getStyleFromType()
-            topAlertMessage(activity, message, finalStyle).show()
+            val finalIcon = finalStyle.iconResource ?: getDefaultIconForType()
+            val styleWithIcon = finalStyle.copy(
+                iconResource = finalIcon
+            )
+            topAlertMessage(activity, message, styleWithIcon).show()
         }
 
         fun getStyleFromType(): MessageStyle{
@@ -71,6 +83,14 @@ object TopAlertX {
                 MessageType.SUCCESS -> globalConfig.successStyle
                 MessageType.INFO -> globalConfig.infoStyle
                 MessageType.ERROR -> globalConfig.errorStyle
+            }
+        }
+
+        fun getDefaultIconForType(): Int{
+            return when(type){
+                MessageType.SUCCESS -> com.rahulsaini.alertx.R.drawable.check_circle_24
+                MessageType.INFO -> com.rahulsaini.alertx.R.drawable.info_24
+                MessageType.ERROR -> com.rahulsaini.alertx.R.drawable.error_24
             }
         }
 
@@ -94,7 +114,7 @@ object TopAlertX {
             var view = createView(activity, rootView)
 
             // 3. Apply text and style
-            applyStyle(view)
+            applyStyle(activity,view)
 
             // 4. Animate and add to screen
             animateIn(view)
@@ -110,11 +130,20 @@ object TopAlertX {
             return inflater.inflate(com.rahulsaini.alertx.R.layout.message, parent, false)
         }
 
-        private fun applyStyle(view: View) {
+        private fun applyStyle(activity: Activity, view: View) {
             val txt_message = view.findViewById<TextView>(com.rahulsaini.alertx.R.id.txt_message)
+            val messageContainer = view.findViewById<ConstraintLayout>(com.rahulsaini.alertx.R.id.message_container)
+            val iconRes = view.findViewById<ImageView>(com.rahulsaini.alertx.R.id.img_message)
             txt_message.text = message
-            txt_message.setBackgroundColor(style.backgroundColor)
-            // Note: Padding is handled in message.xml to push text down from the top
+            txt_message.setTextColor(style.textColor)
+            messageContainer.setBackgroundColor(
+                ContextCompat.getColor(activity, style.containerBackgroundColor)
+            )
+            iconRes.apply {
+                isVisible = style.showIcon
+                setImageResource(style.iconResource ?: 1)
+                setColorFilter(style.iconTint)
+            }
         }
 
         private fun animateIn(view: View){

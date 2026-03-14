@@ -7,8 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.rahulsaini.alertx.AlertXToast
-import com.rahulsaini.alertx.topDialog.TopAlertX
+import com.rahulsaini.alertx.topDialog.AlertXTop
 
 class MainActivity : AppCompatActivity() {
     @SuppressLint("MissingInflatedId")
@@ -26,16 +25,16 @@ class MainActivity : AppCompatActivity() {
         var btnError = findViewById<Button>(R.id.btn_error)
         btnSuccess.setOnClickListener {
 //            AlertXToast.show(this, "my custom toast")
-            TopAlertX.showSuccess(this, "success message sdnfoids iosndbfgiw oiewrfi dfiub fewui ds efiewoi dsf in weids wsegf iwenf popew dsaowe weifna")
+            AlertXTop.showSuccess(this, "success message sdnfoids iosndbfgiw oiewrfi dfiub fewui ds efiewoi dsf in weids wsegf iwenf popew dsaowe weifna")
 
         }
 
         btnInfo.setOnClickListener {
-            TopAlertX.showInfo(this, "Info message jbjbiu  ujivyuyu buuih")
+            AlertXTop.showInfo(this, "Info message jbjbiu  ujivyuyu buuih")
         }
 
         btnError.setOnClickListener {
-            TopAlertX.showError(this, "Error messagejk jkbb")
+            AlertXTop.showError(this, "Error messagejk jkbb")
         }
 
     }
