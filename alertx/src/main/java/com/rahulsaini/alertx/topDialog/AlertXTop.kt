@@ -5,8 +5,10 @@ import android.app.Activity
 import android.graphics.Color
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
@@ -128,13 +130,15 @@ object AlertXTop {
     ){
 
         var onDismiss: (()-> Unit)? = null
+        var isDismissed: Boolean = false
 
         fun showInterval(onDismiss: ()-> Unit){
             this.onDismiss = onDismiss
             show()
         }
 
-        fun dismissView(){
+        fun dismissView(view: View){
+            (view.parent as? ViewGroup)?.removeView(view)
             onDismiss?.invoke()
         }
 
@@ -147,6 +151,8 @@ object AlertXTop {
 
             // 3. Apply text and style
             applyStyle(activity,view)
+
+            attachSwipeToDismiss(view)
 
             // 4. Animate and add to screen
             animateIn(view)
@@ -210,10 +216,87 @@ object AlertXTop {
                 }
 
                 Handler(Looper.getMainLooper()).postDelayed({
-                    (view.parent as? ViewGroup)?.removeView(view)
-                    dismissView()
+                    dismissView(view)
                 }, 300)
             }, style.duration)
+        }
+
+        fun attachSwipeToDismiss(view: View){
+            var startX = 0f
+            var startY = 0f
+            view.setOnTouchListener { v,event ->
+                when(event.action){
+                    MotionEvent.ACTION_DOWN -> {
+                        startX = event.rawX
+                        startY = event.rawY
+                    }
+
+                    MotionEvent.ACTION_MOVE -> {
+                        var diffX = event.rawX - startX
+                        var diffY = event.rawY - startY
+                        if(kotlin.math.abs(diffX) > kotlin.math.abs(diffY)){
+                            v.translationX = diffX
+                        }
+                        else{
+                            v.translationY = diffY
+                        }
+                    }
+
+                    MotionEvent.ACTION_UP -> {
+                        Log.d("check_anim", "x value -> ${v.translationX}")
+                        var swipedX = kotlin.math.abs(v.translationX)
+                        var swipedY = kotlin.math.abs(v.translationY)
+
+                        if (swipedX > 100){
+                            dismissWithSwipe(view, isHorizontalSwipe = true,v)
+                        }
+                        else if (swipedY > 30){
+                            dismissWithSwipe(view, v = v)
+                        }
+                        else{
+                            v.animate().translationX(0f).start()
+                            v.performClick()
+                        }
+                    }
+                }
+                true
+            }
+        }
+
+        fun dismissWithSwipe(view: View, isHorizontalSwipe: Boolean = false, v: View){
+            if(isDismissed) return
+            isDismissed = true
+
+            if (isHorizontalSwipe){
+                if (v.translationX < 0){
+                    view.animate()
+                        .translationX(-view.width.toFloat())
+                        .alpha(0f)
+                        .setDuration(100)
+                        .withEndAction {
+                            dismissView(view)
+                        }
+                }
+                else{
+                    view.animate()
+                        .translationX(view.width.toFloat())
+                        .alpha(0f)
+                        .setDuration(100)
+                        .withEndAction {
+                            dismissView(view)
+                        }
+                }
+
+            }
+            else{
+                view.animate()
+                    .translationY(-view.height.toFloat())
+                    .alpha(0f)
+                    .setDuration(100)
+                    .withEndAction {
+                        dismissView(view)
+                    }
+            }
         }
     }
 
