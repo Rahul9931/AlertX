@@ -1,24 +1,7 @@
 package com.rahulsaini.alertx.topDialog
 
-import android.R
 import android.app.Activity
-import android.graphics.Color
-import android.os.Handler
-import android.os.Looper
-import android.util.Log
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.MotionEvent
-import android.view.View
-import android.view.ViewGroup
-import android.view.animation.AnimationUtils
-import android.widget.FrameLayout
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.annotation.ColorRes
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat
-import androidx.core.view.isVisible
+import android.app.Application
 import com.rahulsaini.alertx.topDialog.message.TopAlertMessage
 import com.rahulsaini.alertx.topDialog.builder.AlertBuilder
 import com.rahulsaini.alertx.topDialog.config.GlobalConfig
@@ -35,7 +18,7 @@ object AlertXTop {
         QueueManager.enqueue(alertMessage)
     }
 
-    fun initialize(activity: Activity, config: GlobalConfig.()-> Unit){
+    fun initialize(activity: Application, config: GlobalConfig.() -> Unit){
         globalConfig.apply(config)
     }
 
