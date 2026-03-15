@@ -19,6 +19,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 
 object AlertXTop {
+
     data class MessageStyle(
         @ColorRes val containerBackgroundColor: Int = com.rahulsaini.alertx.R.color.info,
         val textColor: Int = Color.WHITE,
@@ -44,8 +45,27 @@ object AlertXTop {
 
     private fun getGlobalConfigStyle() = globalConfig
 
+    val alertQueue: ArrayDeque<TopAlertMessage> = ArrayDeque()
+    var isShowing: Boolean = false
+
     fun initialize(activity: Activity, config: GlobalConfig.()-> Unit){
         globalConfig.apply(config)
+    }
+
+    fun enqueue(alert: TopAlertMessage){
+        alertQueue.add(alert)
+        if (!isShowing){
+            nextShow()
+        }
+    }
+
+    private fun nextShow() {
+        val next = alertQueue.removeFirstOrNull() ?: return
+        isShowing = true
+        next.showInterval {
+            isShowing = false
+            nextShow()
+        }
     }
 
     class Builder(private val activity: Activity){
@@ -75,7 +95,8 @@ object AlertXTop {
             val styleWithIcon = finalStyle.copy(
                 iconResource = finalIcon
             )
-            topAlertMessage(activity, message, styleWithIcon).show()
+
+            enqueue(TopAlertMessage(activity, message, styleWithIcon))
         }
 
         fun getStyleFromType(): MessageStyle{
@@ -100,11 +121,22 @@ object AlertXTop {
         SUCCESS, INFO, ERROR
     }
 
-    class topAlertMessage(
+    class TopAlertMessage(
         private val activity: Activity,
         private var message: String,
         private var style: MessageStyle
     ){
+
+        var onDismiss: (()-> Unit)? = null
+
+        fun showInterval(onDismiss: ()-> Unit){
+            this.onDismiss = onDismiss
+            show()
+        }
+
+        fun dismissView(){
+            onDismiss?.invoke()
+        }
 
         fun show(){
             // 1. Get the root layout of the activity (android.R.id.content)
@@ -179,6 +211,7 @@ object AlertXTop {
 
                 Handler(Looper.getMainLooper()).postDelayed({
                     (view.parent as? ViewGroup)?.removeView(view)
+                    dismissView()
                 }, 300)
             }, style.duration)
         }
@@ -208,6 +241,6 @@ object AlertXTop {
 
 //    custom message for full control of the style
 fun showCustomMessage(activity: Activity, message: String, style: MessageStyle){
-    topAlertMessage(activity,message, style).show()
+    TopAlertMessage(activity,message, style).show()
 }
 }
