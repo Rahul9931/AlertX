@@ -46,6 +46,9 @@ object AlertXTop {
 
 //    custom message for full control of the style
 fun showCustomMessage(activity: Activity, message: String, style: MessageStyle){
-    TopAlertMessage(activity,message, style).show()
+    AlertBuilder(activity)
+        .setMessage(message)
+        .setCustomStyle(style)
+        .show()
 }
 }

@@ -28,6 +28,10 @@ class AlertBuilder(private val activity: Activity){
         this.type = MessageType.ERROR
     }
 
+    fun setCustomStyle(style: MessageStyle) = apply {
+        this.customStyle = style
+    }
+
     fun show(){
         val finalStyle = customStyle ?: getStyleFromType()
         val finalIcon = finalStyle.iconResource ?: getDefaultIconForType()
