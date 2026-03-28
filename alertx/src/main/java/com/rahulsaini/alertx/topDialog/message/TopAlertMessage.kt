@@ -10,14 +10,17 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.core.os.HandlerCompat
 import androidx.core.view.isVisible
 import com.rahulsaini.alertx.topDialog.model.MessageStyle
+import kotlinx.coroutines.Runnable
 import kotlin.math.abs
 
 class TopAlertMessage(
@@ -28,6 +31,8 @@ class TopAlertMessage(
 
     var onDismiss: (()-> Unit)? = null
     var isDismissed: Boolean = false
+    private var autoDismissHandler: Handler? = null
+    private var autoDismissRunnable: Runnable? = null
 
     fun showInterval(onDismiss: ()-> Unit){
         this.onDismiss = onDismiss
@@ -56,7 +61,7 @@ class TopAlertMessage(
         addToScreen(view, rootView)
 
         // 5. Auto-dismiss after duration
-        scheduleViewDismiss(view)
+        scheduleAutoDismiss(view)
     }
 
     private fun createView(activity: Activity, parent: ViewGroup): View {
@@ -72,12 +77,18 @@ class TopAlertMessage(
         txt_message.text = message
         txt_message.setTextColor(style.textColor)
         messageContainer.setBackgroundColor(
-            ContextCompat.getColor(activity, style.containerBackgroundColor)
+            ContextCompat.getColor(activity, style.containerBackgroundColorRes)
         )
         iconRes.apply {
-            isVisible = style.showIcon
-            setImageResource(style.iconResource ?: 1)
-            setColorFilter(style.iconTint)
+            if (style.showIcon && style.iconResource != null){
+                isVisible = true
+                setImageResource(style.iconResource!!)
+                setColorFilter(style.iconTint)
+                contentDescription = "Alert Icon"
+            }
+            else{
+                isVisible = false
+            }
         }
     }
 
@@ -100,22 +111,31 @@ class TopAlertMessage(
         rootView.addView(view, params)
     }
 
-    private fun scheduleViewDismiss(view: View){
-        Handler(Looper.getMainLooper()).postDelayed({
-            val slideUp = try {
-                AnimationUtils.loadAnimation(activity, com.rahulsaini.alertx.R.anim.slide_up)
-            } catch (e: Exception) {
-                null
-            }
+    private fun scheduleAutoDismiss(view: View){
+        val slideUp = try {
+            AnimationUtils.loadAnimation(activity, com.rahulsaini.alertx.R.anim.slide_up)
+        } catch (e: Exception) {
+            null
+        }
+
+        autoDismissHandler = HandlerCompat.createAsync(Looper.getMainLooper())
+        autoDismissRunnable = Runnable {
+            if (isDismissed) return@Runnable
 
             if (slideUp != null) {
                 view.startAnimation(slideUp)
-            }
+                slideUp.setAnimationListener(object : Animation.AnimationListener{
+                    override fun onAnimationEnd(animation: Animation?) {
+                        if (!isDismissed) dismissView(view)
+                    }
 
-            Handler(Looper.getMainLooper()).postDelayed({
-                dismissView(view)
-            }, 300)
-        }, style.duration)
+                    override fun onAnimationRepeat(animation: Animation?) {}
+
+                    override fun onAnimationStart(animation: Animation?) {}
+                })
+            }
+        }
+        autoDismissHandler?.postDelayed(autoDismissRunnable!!, style.duration)
     }
 
     fun attachSwipeToDismiss(view: View){
