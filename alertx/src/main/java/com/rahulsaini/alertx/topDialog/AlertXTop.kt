@@ -22,6 +22,10 @@ object AlertXTop {
         globalConfig.apply(config)
     }
 
+    fun dismissCurrentAlert(){
+        QueueManager.dismissCurrentAlert()
+    }
+
 // Quick Methods
     fun showSuccess(activity: Activity, message: String){
     AlertBuilder(activity)

@@ -21,6 +21,7 @@ import androidx.core.os.HandlerCompat
 import androidx.core.view.isVisible
 import com.rahulsaini.alertx.topDialog.model.MessageStyle
 import kotlinx.coroutines.Runnable
+import java.lang.ref.WeakReference
 import kotlin.math.abs
 
 class TopAlertMessage(
@@ -33,8 +34,11 @@ class TopAlertMessage(
     var isDismissed: Boolean = false
     private var autoDismissHandler: Handler? = null
     private var autoDismissRunnable: Runnable? = null
+    private var currentView: View? = null
 
-    fun showInterval(onDismiss: ()-> Unit){
+    private var activityRef = WeakReference(activity)
+
+    fun showWithCallback(onDismiss: ()-> Unit){
         this.onDismiss = onDismiss
         show()
     }
@@ -42,14 +46,43 @@ class TopAlertMessage(
     fun dismissView(view: View){
         (view.parent as? ViewGroup)?.removeView(view)
         onDismiss?.invoke()
+        currentView?.let { view ->
+            (view.parent as? ViewGroup)?.removeView(view)
+            onDismiss?.invoke()
+            currentView = null
+
+        }
+    }
+
+    fun cancelAutoDismiss(){
+        autoDismissHandler?.removeCallbacksAndMessages(null)
+        autoDismissHandler = null
+        autoDismissRunnable = null
+    }
+
+    fun forceDismiss(){
+        if (!isDismissed){
+            isDismissed = true
+            cancelAutoDismiss()
+        }
     }
 
     fun show(){
+        val activity = activityRef.get() ?: return   // if null activity destroyed
+
+        if (activity.isFinishing || activity.isDestroyed) return   // don't show if finishing
         // 1. Get the root layout of the activity (android.R.id.content)
-        val rootView = activity.window.decorView.findViewById<FrameLayout>(R.id.content)
+
+        val rootView = try {
+            activity.window.decorView.findViewById<FrameLayout>(R.id.content)
+        }
+        catch (e: Exception){
+            null
+        } ?: return
 
         // 2. Create the view with parent context to respect XML layout attributes
         var view = createView(activity, rootView)
+        currentView = view
 
         // 3. Apply text and style
         applyStyle(activity,view)

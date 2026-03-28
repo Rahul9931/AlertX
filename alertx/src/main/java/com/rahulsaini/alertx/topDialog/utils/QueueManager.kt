@@ -9,6 +9,7 @@ object QueueManager {
     val alertQueue: ArrayDeque<TopAlertMessage> = ArrayDeque()
     var isShowing: Boolean = false
     private var lock = ReentrantLock()
+    private var currentAlert: TopAlertMessage? = null
 
     fun enqueue(alert: TopAlertMessage){
         lock.withLock {
@@ -22,11 +23,22 @@ object QueueManager {
     private fun nextShow() {
         lock.withLock {
             val next = alertQueue.removeFirstOrNull() ?: return
+            currentAlert = next
             isShowing = true
-            next.showInterval {
-                isShowing = false
-                nextShow()
-            }
+            next.showWithCallback(
+                {
+                    lock.withLock {
+                        currentAlert = null
+                        isShowing = false
+                        nextShow()
+                    }
+            })
+        }
+    }
+
+    fun dismissCurrentAlert(){
+        lock.withLock {
+            currentAlert?.forceDismiss()
         }
     }
 }
