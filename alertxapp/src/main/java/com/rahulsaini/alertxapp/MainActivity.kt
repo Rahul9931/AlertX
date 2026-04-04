@@ -33,19 +33,32 @@ class MainActivity : AppCompatActivity() {
         }
 
         btnInfo.setOnClickListener {
-            AlertXTop.showInfo(this, "Info message jbjbiu  ujivyuyu buuih")
+            var customStyle = MessageStyle(
+                containerBackgroundColorRes = R.color.black,
+                textColor = Color.RED,
+                iconResource = R.drawable.ic_android_black_24,
+                iconTint = Color.GRAY,
+                showIcon = true
+            )
+            AlertXTop.showCustomMessage(this, "this is my custom message", customStyle)
         }
 
         btnError.setOnClickListener {
-            AlertXTop.showError(this, "Error messagejk jkbb")
+            var customStyle = MessageStyle(
+                containerBackgroundColorRes = R.color.black,
+                textColor = Color.RED,
+                iconTint = Color.GRAY,
+                showIcon = false
+            )
+            AlertXTop.showCustomMessage(this, "this is my custom message", customStyle)
         }
 
         btnCustom.setOnClickListener {
             var customStyle = MessageStyle(
-                containerBackgroundColor = R.color.black,
+                containerBackgroundColorRes = R.color.black,
                 textColor = Color.RED,
                 iconResource = R.drawable.ic_android_black_24,
-                iconTint = Color.BLUE
+                iconTint = Color.GRAY
             )
             AlertXTop.showCustomMessage(this, "this is my custom message", customStyle)
         }

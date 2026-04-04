@@ -19,6 +19,10 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.os.HandlerCompat
 import androidx.core.view.isVisible
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.OnLifecycleEvent
 import com.rahulsaini.alertx.topDialog.model.MessageStyle
 import kotlinx.coroutines.Runnable
 import java.lang.ref.WeakReference
@@ -73,6 +77,22 @@ class TopAlertMessage(
         if (activity.isFinishing || activity.isDestroyed) return   // don't show if finishing
         // 1. Get the root layout of the activity (android.R.id.content)
 
+        // lifecycle check
+        if (activity is LifecycleOwner){
+            // check if activity is resumed (visible and interactive)
+            if (!activity.lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)){
+                // activity is in background - postpone showing
+                activity.lifecycle.addObserver(object : LifecycleObserver{
+                    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
+                    fun onResume(){
+                        show() // try again when activity resume
+                        activity.lifecycle.removeObserver(this)
+                    }
+                })
+                return // don't show now
+            }
+        }
+
         val rootView = try {
             activity.window.decorView.findViewById<FrameLayout>(R.id.content)
         }
@@ -83,6 +103,9 @@ class TopAlertMessage(
         // 2. Create the view with parent context to respect XML layout attributes
         var view = createView(activity, rootView)
         currentView = view
+        view.contentDescription = "alert $message"
+        view.isFocusable = true
+        view.isFocusableInTouchMode = true
 
         // 3. Apply text and style
         applyStyle(activity,view)
