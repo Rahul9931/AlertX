@@ -1,8 +1,6 @@
 package com.rahulsaini.alertxapp
 
 import android.app.Application
-import com.rahulsaini.alertx.topDialog.AlertXTop
-import com.rahulsaini.alertx.topDialog.model.MessageStyle
 
 class MyApplication: Application() {
     override fun onCreate() {

@@ -1,8 +1,7 @@
-package com.rahulsaini.alertx.topDialog.utils
+package com.rahulsaini.alertx.alertXTop.utils
 
-import com.rahulsaini.alertx.topDialog.message.TopAlertMessage
+import com.rahulsaini.alertx.alertXTop.message.TopAlertMessage
 import java.util.concurrent.locks.ReentrantLock
-import kotlin.collections.removeFirstOrNull
 import kotlin.concurrent.withLock
 
 object QueueManager {

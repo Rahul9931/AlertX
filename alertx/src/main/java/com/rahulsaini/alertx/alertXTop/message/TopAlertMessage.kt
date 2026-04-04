@@ -1,4 +1,4 @@
-package com.rahulsaini.alertx.topDialog.message
+package com.rahulsaini.alertx.alertXTop.message
 
 import android.R
 import android.app.Activity
@@ -23,7 +23,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.OnLifecycleEvent
-import com.rahulsaini.alertx.topDialog.model.MessageStyle
+import com.rahulsaini.alertx.alertXTop.model.MessageStyle
 import kotlinx.coroutines.Runnable
 import java.lang.ref.WeakReference
 import kotlin.math.abs

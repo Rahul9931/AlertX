@@ -1,12 +1,12 @@
-package com.rahulsaini.alertx.topDialog
+package com.rahulsaini.alertx.alertXTop
 
 import android.app.Activity
 import android.app.Application
-import com.rahulsaini.alertx.topDialog.message.TopAlertMessage
-import com.rahulsaini.alertx.topDialog.builder.AlertBuilder
-import com.rahulsaini.alertx.topDialog.config.GlobalConfig
-import com.rahulsaini.alertx.topDialog.model.MessageStyle
-import com.rahulsaini.alertx.topDialog.utils.QueueManager
+import com.rahulsaini.alertx.alertXTop.message.TopAlertMessage
+import com.rahulsaini.alertx.alertXTop.builder.AlertBuilder
+import com.rahulsaini.alertx.alertXTop.config.GlobalConfig
+import com.rahulsaini.alertx.alertXTop.model.MessageStyle
+import com.rahulsaini.alertx.alertXTop.utils.QueueManager
 
 object AlertXTop {
 

@@ -1,11 +1,11 @@
-package com.rahulsaini.alertx.topDialog.builder
+package com.rahulsaini.alertx.alertXTop.builder
 
 import android.app.Activity
 import com.rahulsaini.alertx.R
-import com.rahulsaini.alertx.topDialog.AlertXTop
-import com.rahulsaini.alertx.topDialog.message.TopAlertMessage
-import com.rahulsaini.alertx.topDialog.model.MessageStyle
-import com.rahulsaini.alertx.topDialog.model.MessageType
+import com.rahulsaini.alertx.alertXTop.AlertXTop
+import com.rahulsaini.alertx.alertXTop.message.TopAlertMessage
+import com.rahulsaini.alertx.alertXTop.model.MessageStyle
+import com.rahulsaini.alertx.alertXTop.model.MessageType
 
 class AlertBuilder(private val activity: Activity){
     private var message: String = ""

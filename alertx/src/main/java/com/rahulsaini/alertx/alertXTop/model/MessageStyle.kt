@@ -1,4 +1,4 @@
-package com.rahulsaini.alertx.topDialog.model
+package com.rahulsaini.alertx.alertXTop.model
 
 import android.graphics.Color
 import androidx.annotation.ColorRes

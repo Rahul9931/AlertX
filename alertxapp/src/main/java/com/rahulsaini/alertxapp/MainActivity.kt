@@ -8,8 +8,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.rahulsaini.alertx.topDialog.AlertXTop
-import com.rahulsaini.alertx.topDialog.model.MessageStyle
+import com.rahulsaini.alertx.alertXTop.AlertXTop
+import com.rahulsaini.alertx.alertXTop.model.MessageStyle
 
 class MainActivity : AppCompatActivity() {
     @SuppressLint("MissingInflatedId")
