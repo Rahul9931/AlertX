@@ -5,7 +5,7 @@ import androidx.annotation.ColorRes
 import com.rahulsaini.alertx.R
 
 data class MessageStyle(
-    @ColorRes val containerBackgroundColorRes: Int = R.color.info,
+    @ColorRes val containerBackgroundColorRes: Int = R.color.alertx_info,
     val textColor: Int = Color.WHITE,
     val duration: Long = 2000,
     val showIcon: Boolean = true,

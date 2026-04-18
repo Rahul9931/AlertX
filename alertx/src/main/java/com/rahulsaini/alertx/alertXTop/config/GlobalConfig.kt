@@ -5,12 +5,12 @@ import com.rahulsaini.alertx.shared.model.MessageStyle
 
 class GlobalConfig{
     var successStyle: MessageStyle = MessageStyle(
-        containerBackgroundColorRes = R.color.success
+        containerBackgroundColorRes = R.color.alertx_success
     )
     var infoStyle: MessageStyle = MessageStyle(
-        containerBackgroundColorRes = R.color.info
+        containerBackgroundColorRes = R.color.alertx_info
     )
     var errorStyle: MessageStyle = MessageStyle(
-        containerBackgroundColorRes = R.color.error
+        containerBackgroundColorRes = R.color.alertx_error
     )
 }
