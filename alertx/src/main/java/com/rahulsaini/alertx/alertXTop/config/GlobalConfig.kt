@@ -1,7 +1,7 @@
 package com.rahulsaini.alertx.alertXTop.config
 
 import com.rahulsaini.alertx.R
-import com.rahulsaini.alertx.alertXTop.model.MessageStyle
+import com.rahulsaini.alertx.shared.model.MessageStyle
 
 class GlobalConfig{
     var successStyle: MessageStyle = MessageStyle(

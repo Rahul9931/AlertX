@@ -4,8 +4,8 @@ import android.app.Activity
 import com.rahulsaini.alertx.R
 import com.rahulsaini.alertx.alertXTop.AlertXTop
 import com.rahulsaini.alertx.alertXTop.message.TopAlertMessage
-import com.rahulsaini.alertx.alertXTop.model.MessageStyle
-import com.rahulsaini.alertx.alertXTop.model.MessageType
+import com.rahulsaini.alertx.shared.model.MessageStyle
+import com.rahulsaini.alertx.shared.model.MessageType
 
 class AlertBuilder(private val activity: Activity){
     private var message: String = ""

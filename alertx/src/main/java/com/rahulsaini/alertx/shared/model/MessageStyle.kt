@@ -1,10 +1,11 @@
-package com.rahulsaini.alertx.alertXTop.model
+package com.rahulsaini.alertx.shared.model
 
 import android.graphics.Color
 import androidx.annotation.ColorRes
+import com.rahulsaini.alertx.R
 
 data class MessageStyle(
-    @ColorRes val containerBackgroundColorRes: Int = com.rahulsaini.alertx.R.color.info,
+    @ColorRes val containerBackgroundColorRes: Int = R.color.info,
     val textColor: Int = Color.WHITE,
     val duration: Long = 2000,
     val showIcon: Boolean = true,

@@ -23,7 +23,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.OnLifecycleEvent
-import com.rahulsaini.alertx.alertXTop.model.MessageStyle
+import com.rahulsaini.alertx.shared.model.MessageStyle
 import kotlinx.coroutines.Runnable
 import java.lang.ref.WeakReference
 import kotlin.math.abs

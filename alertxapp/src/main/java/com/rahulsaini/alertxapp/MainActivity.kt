@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.rahulsaini.alertx.alertXTop.AlertXTop
-import com.rahulsaini.alertx.alertXTop.model.MessageStyle
+import com.rahulsaini.alertx.shared.model.MessageStyle
 
 class MainActivity : AppCompatActivity() {
     @SuppressLint("MissingInflatedId")
@@ -33,14 +33,14 @@ class MainActivity : AppCompatActivity() {
         }
 
         btnInfo.setOnClickListener {
-            var customStyle = MessageStyle(
-                containerBackgroundColorRes = R.color.black,
-                textColor = Color.RED,
-                iconResource = R.drawable.ic_android_black_24,
-                iconTint = Color.GRAY,
-                showIcon = true
-            )
-            AlertXTop.showCustomMessage(this, "this is my custom message", customStyle)
+//            var customStyle = MessageStyle(
+//                containerBackgroundColorRes = R.color.black,
+//                textColor = Color.RED,
+//                iconResource = R.drawable.ic_android_black_24,
+//                iconTint = Color.GRAY,
+//                showIcon = true
+//            )
+            AlertXTop.showInfo(this, "this is my custom message")
         }
 
         btnError.setOnClickListener {
@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
                 iconTint = Color.GRAY,
                 showIcon = false
             )
-            AlertXTop.showCustomMessage(this, "this is my custom message", customStyle)
+            AlertXTop.showError(this, "this is my custom message")
         }
 
         btnCustom.setOnClickListener {
