@@ -1,4 +1,4 @@
-package com.rahulsaini.alertx.alertXTop.config
+package com.rahulsaini.alertx.shared.config
 
 import com.rahulsaini.alertx.R
 import com.rahulsaini.alertx.shared.model.MessageStyle

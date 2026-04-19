@@ -1,18 +1,17 @@
-package com.rahulsaini.alertx.alertXTop.builder
+package com.rahulsaini.alertx.alertXToast.builder
 
 import android.app.Activity
 import com.rahulsaini.alertx.R
-import com.rahulsaini.alertx.alertXTop.AlertXTop
-import com.rahulsaini.alertx.alertXTop.message.TopAlertMessage
+import com.rahulsaini.alertx.alertXToast.AlertXToast
 import com.rahulsaini.alertx.shared.model.MessageStyle
 import com.rahulsaini.alertx.shared.model.MessageType
 
-class AlertBuilder(private val activity: Activity){
-    private var message: String = ""
+class AlertBuilder(private val activity: Activity) {
     private var customStyle: MessageStyle? = null
-    private var type = MessageType.INFO
+    private var type: MessageType = MessageType.INFO
+    private var message: String = ""
 
-    fun setMessage(message:String) = apply{
+    fun setMessage(message:String){
         this.message = message
     }
 
@@ -37,33 +36,29 @@ class AlertBuilder(private val activity: Activity){
     }
 
     fun show(){
-        val finalStyle = getStyleFromType()
-        var styleWithIcon: MessageStyle
-        if (finalStyle.showIcon){
-            val finalIcon = finalStyle.iconResource ?: getDefaultIconForType()
-            styleWithIcon = finalStyle.copy(
-                iconResource = finalIcon
+        var style = getStyleFromType()
+        var styleWithIcon = MessageStyle()
+        if (style.showIcon){
+            var icon = style.iconResource ?: getDefaultIconFromType()
+            styleWithIcon = style.copy(
+                iconResource = icon
             )
         }
         else{
-            styleWithIcon = finalStyle
+            styleWithIcon = style
         }
-
-
-        AlertXTop.enqueue(TopAlertMessage(activity, message, styleWithIcon))
     }
 
-    fun getStyleFromType(): MessageStyle {
+    fun getStyleFromType(): MessageStyle{
         return when(type){
+            MessageType.SUCCESS -> AlertXToast.getGlobalConfig().successStyle
+            MessageType.INFO -> AlertXToast.getGlobalConfig().infoStyle
+            MessageType.ERROR -> AlertXToast.getGlobalConfig().errorStyle
             MessageType.CUSTOM -> customStyle!!
-            MessageType.SUCCESS -> AlertXTop.getGlobalConfigStyle().successStyle
-            MessageType.INFO -> AlertXTop.getGlobalConfigStyle().infoStyle
-            MessageType.ERROR -> AlertXTop.getGlobalConfigStyle().errorStyle
-            else -> AlertXTop.getGlobalConfigStyle().infoStyle
         }
     }
 
-    fun getDefaultIconForType(): Int{
+    fun getDefaultIconFromType(): Int{
         return when(type){
             MessageType.SUCCESS -> R.drawable.check_circle_24
             MessageType.INFO -> R.drawable.info_24
@@ -71,5 +66,4 @@ class AlertBuilder(private val activity: Activity){
             MessageType.CUSTOM -> R.drawable.info_24
         }
     }
-
 }

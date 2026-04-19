@@ -4,7 +4,7 @@ import android.app.Activity
 import android.app.Application
 import com.rahulsaini.alertx.alertXTop.message.TopAlertMessage
 import com.rahulsaini.alertx.alertXTop.builder.AlertBuilder
-import com.rahulsaini.alertx.alertXTop.config.GlobalConfig
+import com.rahulsaini.alertx.shared.config.GlobalConfig
 import com.rahulsaini.alertx.shared.model.MessageStyle
 import com.rahulsaini.alertx.alertXTop.utils.QueueManager
 

@@ -75,7 +75,6 @@ class TopAlertMessage(
         val activity = activityRef.get() ?: return   // if null activity destroyed
 
         if (activity.isFinishing || activity.isDestroyed) return   // don't show if finishing
-        // 1. Get the root layout of the activity (android.R.id.content)
 
         // lifecycle check
         if (activity is LifecycleOwner){
@@ -93,6 +92,7 @@ class TopAlertMessage(
             }
         }
 
+        // 1. Get the root layout of the activity (android.R.id.content)
         val rootView = try {
             activity.window.decorView.findViewById<FrameLayout>(R.id.content)
         }
