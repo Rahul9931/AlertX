@@ -3,6 +3,7 @@ package com.rahulsaini.alertx.alertXToast.builder
 import android.app.Activity
 import com.rahulsaini.alertx.R
 import com.rahulsaini.alertx.alertXToast.AlertXToast
+import com.rahulsaini.alertx.alertXToast.message.ToastAlertMessage
 import com.rahulsaini.alertx.shared.model.MessageStyle
 import com.rahulsaini.alertx.shared.model.MessageType
 
@@ -11,7 +12,7 @@ class AlertBuilder(private val activity: Activity) {
     private var type: MessageType = MessageType.INFO
     private var message: String = ""
 
-    fun setMessage(message:String){
+    fun setMessage(message:String) = apply{
         this.message = message
     }
 
@@ -47,6 +48,8 @@ class AlertBuilder(private val activity: Activity) {
         else{
             styleWithIcon = style
         }
+
+        ToastAlertMessage(activity, message, styleWithIcon).show()
     }
 
     fun getStyleFromType(): MessageStyle{

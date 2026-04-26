@@ -8,6 +8,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.rahulsaini.alertx.alertXToast.AlertXToast
 import com.rahulsaini.alertx.alertXTop.AlertXTop
 import com.rahulsaini.alertx.shared.model.MessageStyle
 
@@ -28,8 +29,8 @@ class MainActivity : AppCompatActivity() {
         var btnCustom = findViewById<Button>(R.id.btn_custom_msg)
         btnSuccess.setOnClickListener {
 //            AlertXToast.show(this, "my custom toast")
-            AlertXTop.showSuccess(this, "success message sdnfoids iosndbfgiw oiewrfi dfiub fewui ds efiewoi dsf in weids wsegf iwenf popew dsaowe weifna")
-
+//            AlertXTop.showSuccess(this, "success message sdnfoids iosndbfgiw oiewrfi dfiub fewui ds efiewoi dsf in weids wsegf iwenf popew dsaowe weifna")
+            AlertXToast.showSuccessToast(this, "toast message successfull")
         }
 
         btnInfo.setOnClickListener {
