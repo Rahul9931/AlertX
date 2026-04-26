@@ -9,7 +9,6 @@
     android:layout_height="wrap_content"
     android:minHeight="70dp"
     app:cardCornerRadius="20dp"
-    android:backgroundTint="@color/alertx_success"
     >
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

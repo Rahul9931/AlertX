@@ -57,7 +57,7 @@ class ToastAlertMessage(
         var toastMsg = view.findViewById<TextView>(com.rahulsaini.alertx.R.id.toast_txt)
         var toastImg = view.findViewById<ImageView>(com.rahulsaini.alertx.R.id.toast_img)
 
-        toastContainer.setBackgroundColor(
+        toastContainer.setCardBackgroundColor(
             ContextCompat.getColor(activity, style.containerBackgroundColorRes)
         )
         toastMsg.text = message
@@ -87,8 +87,7 @@ class ToastAlertMessage(
             FrameLayout.LayoutParams.WRAP_CONTENT
         )
         params.gravity = Gravity.BOTTOM
-//        params.bottomMargin = 100
-        params.setMargins(10,0,10,20)
+        params.setMargins(20,0,30,180)
 
         rootView.addView(view, params)
     }

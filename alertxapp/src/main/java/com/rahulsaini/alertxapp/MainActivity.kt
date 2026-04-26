@@ -28,40 +28,27 @@ class MainActivity : AppCompatActivity() {
         var btnError = findViewById<Button>(R.id.btn_error)
         var btnCustom = findViewById<Button>(R.id.btn_custom_msg)
         btnSuccess.setOnClickListener {
-//            AlertXToast.show(this, "my custom toast")
-//            AlertXTop.showSuccess(this, "success message sdnfoids iosndbfgiw oiewrfi dfiub fewui ds efiewoi dsf in weids wsegf iwenf popew dsaowe weifna")
-            AlertXToast.showSuccessToast(this, "toast message successfull")
+            AlertXToast.showSuccessToast(this, "this is my success toast message")
         }
 
         btnInfo.setOnClickListener {
-//            var customStyle = MessageStyle(
-//                containerBackgroundColorRes = R.color.black,
-//                textColor = Color.RED,
-//                iconResource = R.drawable.ic_android_black_24,
-//                iconTint = Color.GRAY,
-//                showIcon = true
-//            )
-            AlertXTop.showInfo(this, "this is my custom message")
+            AlertXToast.showInfoToast(this, "this is my info toast message, this is my info toast message")
         }
 
         btnError.setOnClickListener {
-            var customStyle = MessageStyle(
-                containerBackgroundColorRes = R.color.black,
-                textColor = Color.RED,
-                iconTint = Color.GRAY,
-                showIcon = false
-            )
-            AlertXTop.showError(this, "this is my custom message")
+            AlertXToast.showErrorToast(this, "this is my error toast message, this is my error toast message, this is my error toast message, this is my error toast message")
         }
 
         btnCustom.setOnClickListener {
             var customStyle = MessageStyle(
-                containerBackgroundColorRes = R.color.black,
-                textColor = Color.RED,
+                containerBackgroundColorRes = R.color.info,
+                textColor = Color.CYAN,
+                duration = 5000,
+                showIcon = true,
                 iconResource = R.drawable.ic_android_black_24,
-                iconTint = Color.GRAY
+                iconTint = Color.CYAN
             )
-            AlertXTop.showCustomMessage(this, "this is my custom message", customStyle)
+            AlertXToast.showCustomMessage(this, "This is my custom message with custom style", customStyle)
         }
 
     }
