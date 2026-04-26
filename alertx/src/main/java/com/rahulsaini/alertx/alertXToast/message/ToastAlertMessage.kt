@@ -12,6 +12,8 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -47,7 +49,9 @@ class ToastAlertMessage(
 
         addToScreen(view,rootView)
 
-        scheduleToDismiss(view)
+        animationUp(view)
+
+        scheduleAutoDismiss(view)
 
 
     }
@@ -87,20 +91,58 @@ class ToastAlertMessage(
             FrameLayout.LayoutParams.WRAP_CONTENT
         )
         params.gravity = Gravity.BOTTOM
-        params.setMargins(20,0,30,180)
+        params.setMargins(20,0,30,100)
 
         rootView.addView(view, params)
     }
 
-    private fun scheduleToDismiss(view: View) {
+    private fun scheduleAutoDismiss(view: View) {
+        val slideDown = try {
+            AnimationUtils.loadAnimation(activity, com.rahulsaini.alertx.R.anim.slide_down)
+        }
+        catch (e: Exception){
+            null
+        }
         autoDismissHandler = HandlerCompat.createAsync(Looper.getMainLooper())
         autoDismissRunnable = Runnable {
-            dismissView(view)
+            slideDown?.let {
+                view.startAnimation(slideDown)
+                slideDown.fillAfter = true
+                slideDown.setAnimationListener(object : Animation.AnimationListener{
+                    override fun onAnimationEnd(animation: Animation?) {
+                        dismissView(view)
+                    }
+
+                    override fun onAnimationRepeat(animation: Animation?) {
+
+                    }
+
+                    override fun onAnimationStart(animation: Animation?) {
+
+                    }
+
+                })
+            }
         }
         autoDismissHandler?.postDelayed(autoDismissRunnable!!, style.duration)
     }
 
     fun dismissView(view: View){
         (view.parent as ViewGroup).removeView(view)
+    }
+
+    fun animationUp(view: View){
+        try {
+            val slideUp = AnimationUtils.loadAnimation(activity, com.rahulsaini.alertx.R.anim.slide_up)
+            // fillAfter ko true karein taaki animation ke baad view wahi ruka rahe
+            slideUp.fillAfter = true
+
+            // Animation smooth dikhane ke liye interpolator
+            slideUp.interpolator = android.view.animation.DecelerateInterpolator()
+            view.startAnimation(slideUp)
+        }
+        catch (e: Exception){
+            null
+        }
     }
 }
