@@ -8,6 +8,7 @@ import android.R
 import android.os.Handler
 import android.os.Looper
 import android.print.PrintAttributes
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -49,11 +50,25 @@ class ToastAlertMessage(
 
         addToScreen(view,rootView)
 
-        animationUp(view)
+        dismissOnTouch(view)
+
+        animationUp(view){
+
+        }
 
         scheduleAutoDismiss(view)
 
 
+    }
+
+    private fun dismissOnTouch(view: View) {
+        view.setOnClickListener {
+//            animateDown(view){
+//                dismissView(view)
+//            }
+            Log.d("check_toast", "toast clicked")
+            dismissView(view)
+        }
     }
 
     private fun applyStyle(activity: Activity, view: View) {
@@ -97,31 +112,10 @@ class ToastAlertMessage(
     }
 
     private fun scheduleAutoDismiss(view: View) {
-        val slideDown = try {
-            AnimationUtils.loadAnimation(activity, com.rahulsaini.alertx.R.anim.slide_down)
-        }
-        catch (e: Exception){
-            null
-        }
         autoDismissHandler = HandlerCompat.createAsync(Looper.getMainLooper())
         autoDismissRunnable = Runnable {
-            slideDown?.let {
-                view.startAnimation(slideDown)
-                slideDown.fillAfter = true
-                slideDown.setAnimationListener(object : Animation.AnimationListener{
-                    override fun onAnimationEnd(animation: Animation?) {
-                        dismissView(view)
-                    }
-
-                    override fun onAnimationRepeat(animation: Animation?) {
-
-                    }
-
-                    override fun onAnimationStart(animation: Animation?) {
-
-                    }
-
-                })
+            animateDown(view){
+                dismissView(view)
             }
         }
         autoDismissHandler?.postDelayed(autoDismissRunnable!!, style.duration)
@@ -131,7 +125,30 @@ class ToastAlertMessage(
         (view.parent as ViewGroup).removeView(view)
     }
 
-    fun animationUp(view: View){
+    fun animateDown(view: View, onCompleted: ()-> Unit){
+        view.animate()
+            .translationY(500f)
+            .alpha(0f)
+            .setDuration(300)
+            .withEndAction {
+                onCompleted()
+            }
+            .start()
+    }
+
+    fun animationUp(view: View, onCompleted: () -> Unit){
+        view.translationY = 200f
+        view.alpha = 0f
+        view.animate()
+            .translationY(0f)
+            .alpha(1f)
+            .setDuration(500)
+            .setInterpolator(android.view.animation.DecelerateInterpolator())
+            .withEndAction {
+                onCompleted()
+            }
+            .start()
+
         try {
             val slideUp = AnimationUtils.loadAnimation(activity, com.rahulsaini.alertx.R.anim.slide_up)
             // fillAfter ko true karein taaki animation ke baad view wahi ruka rahe
