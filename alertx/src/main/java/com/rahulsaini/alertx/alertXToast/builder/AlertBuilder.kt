@@ -49,7 +49,7 @@ class AlertBuilder(private val activity: Activity) {
             styleWithIcon = style
         }
 
-        ToastAlertMessage(activity, message, styleWithIcon).show()
+        AlertXToast.enqueue(ToastAlertMessage(activity, message, styleWithIcon))
     }
 
     fun getStyleFromType(): MessageStyle{

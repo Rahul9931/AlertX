@@ -28,6 +28,12 @@ class ToastAlertMessage(
 
     private var autoDismissHandler: Handler? = null
     private var autoDismissRunnable: Runnable? = null
+    private var onDismiss: (() -> Unit)? = null
+
+    fun showWithCallback(onDismiss: ()-> Unit){
+        this.onDismiss = onDismiss
+        show()
+    }
 
     fun show(){
         val rootView = try {
@@ -113,6 +119,7 @@ class ToastAlertMessage(
 
     private fun dismissView(view: View){
         (view.parent as? ViewGroup)?.removeView(view)
+        onDismiss?.invoke()
     }
 
     /**
