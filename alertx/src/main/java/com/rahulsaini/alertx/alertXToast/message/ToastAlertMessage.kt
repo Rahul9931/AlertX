@@ -3,21 +3,17 @@ package com.rahulsaini.alertx.alertXToast.message
 import android.app.Activity
 import android.widget.FrameLayout
 import com.rahulsaini.alertx.shared.model.MessageStyle
-import java.security.interfaces.RSAPublicKey
 import android.R
 import android.os.Handler
 import android.os.Looper
-import android.print.PrintAttributes
 import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
+import android.view.animation.DecelerateInterpolator
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.os.HandlerCompat
 import androidx.core.view.isVisible
@@ -34,7 +30,6 @@ class ToastAlertMessage(
     private var autoDismissRunnable: Runnable? = null
 
     fun show(){
-        // 1. Get the root layout of the activity (Android.R.id.content)
         val rootView = try {
             activity.window.decorView.findViewById<FrameLayout>(R.id.content)
         }
@@ -42,40 +37,37 @@ class ToastAlertMessage(
             null
         } ?: return
 
-        // 2. create the view with parent context to respect xml layout attribute
-        var view = createView(activity, rootView)
-
-        // 3. apply text and style
-        applyStyle(activity,view)
-
-        addToScreen(view,rootView)
-
+        val view = createView(activity, rootView)
+        applyStyle(activity, view)
+        addToScreen(view, rootView)
+        
+        // Setup click listener
         dismissOnTouch(view)
 
-        animationUp(view){
-
+        // Start property animation (Hit-box safe)
+        animationUp(view) {
+            // Animation finished
         }
 
         scheduleAutoDismiss(view)
-
-
     }
 
     private fun dismissOnTouch(view: View) {
         view.setOnClickListener {
-//            animateDown(view){
-//                dismissView(view)
-//            }
-            Log.d("check_toast", "toast clicked")
-            dismissView(view)
+            Log.d("check_toast", "Toast clicked! Animating down...")
+            // Pehle animate down karein, phir remove karein
+            animateDown(view) {
+                dismissView(view)
+            }
         }
     }
 
     private fun applyStyle(activity: Activity, view: View) {
-        var toastContainer = view.findViewById<MaterialCardView>(com.rahulsaini.alertx.R.id.toast_msg_container)
-        var toastMsg = view.findViewById<TextView>(com.rahulsaini.alertx.R.id.toast_txt)
-        var toastImg = view.findViewById<ImageView>(com.rahulsaini.alertx.R.id.toast_img)
+        val toastContainer = view.findViewById<MaterialCardView>(com.rahulsaini.alertx.R.id.toast_msg_container)
+        val toastMsg = view.findViewById<TextView>(com.rahulsaini.alertx.R.id.toast_txt)
+        val toastImg = view.findViewById<ImageView>(com.rahulsaini.alertx.R.id.toast_img)
 
+        // CardBackgroundColor use karein taaki radius maintain rahe
         toastContainer.setCardBackgroundColor(
             ContextCompat.getColor(activity, style.containerBackgroundColorRes)
         )
@@ -87,79 +79,67 @@ class ToastAlertMessage(
                 isVisible = true
                 setImageResource(style.iconResource)
                 setColorFilter(style.iconTint)
-                contentDescription = "icon image"
-            }
-            else{
+            } else {
                 isVisible = false
             }
         }
     }
 
     private fun createView(activity: Activity, rootView: ViewGroup): View {
-        var inflator = LayoutInflater.from(activity)
-        return inflator.inflate(com.rahulsaini.alertx.R.layout.toast_message, rootView, false)
+        return LayoutInflater.from(activity).inflate(com.rahulsaini.alertx.R.layout.toast_message, rootView, false)
     }
 
     private fun addToScreen(view: View, rootView: FrameLayout){
-        var params = FrameLayout.LayoutParams(
+        val params = FrameLayout.LayoutParams(
             FrameLayout.LayoutParams.MATCH_PARENT,
             FrameLayout.LayoutParams.WRAP_CONTENT
         )
         params.gravity = Gravity.BOTTOM
-        params.setMargins(20,0,30,100)
-
+        params.setMargins(40, 0, 40, 100) // Space from sides and bottom
         rootView.addView(view, params)
     }
 
     private fun scheduleAutoDismiss(view: View) {
         autoDismissHandler = HandlerCompat.createAsync(Looper.getMainLooper())
         autoDismissRunnable = Runnable {
-            animateDown(view){
-                dismissView(view)
+            if (view.parent != null) {
+                animateDown(view) {
+                    dismissView(view)
+                }
             }
         }
         autoDismissHandler?.postDelayed(autoDismissRunnable!!, style.duration)
     }
 
-    fun dismissView(view: View){
-        (view.parent as ViewGroup).removeView(view)
+    private fun dismissView(view: View){
+        (view.parent as? ViewGroup)?.removeView(view)
+    }
+
+    /**
+     * Modern property animation: Visuals and Touch Area move together.
+     */
+    fun animationUp(view: View, onCompleted: () -> Unit){
+        // Start from below and transparent
+        view.translationY = 500f
+        view.alpha = 0f
+        
+        view.animate()
+            .translationY(0f) // Move to layout position
+            .alpha(1f)
+            .setDuration(500)
+            .setInterpolator(DecelerateInterpolator())
+            .withEndAction { onCompleted() }
+            .start()
+            
+        // REMOVED: AnimationUtils (Legacy) block that was breaking touch events
     }
 
     fun animateDown(view: View, onCompleted: ()-> Unit){
         view.animate()
-            .translationY(500f)
+            .translationY(300f) // Move back down
             .alpha(0f)
             .setDuration(300)
-            .withEndAction {
-                onCompleted()
-            }
+            .withEndAction { onCompleted() }
             .start()
-    }
-
-    fun animationUp(view: View, onCompleted: () -> Unit){
-        view.translationY = 200f
-        view.alpha = 0f
-        view.animate()
-            .translationY(0f)
-            .alpha(1f)
-            .setDuration(500)
-            .setInterpolator(android.view.animation.DecelerateInterpolator())
-            .withEndAction {
-                onCompleted()
-            }
-            .start()
-
-        try {
-            val slideUp = AnimationUtils.loadAnimation(activity, com.rahulsaini.alertx.R.anim.slide_up)
-            // fillAfter ko true karein taaki animation ke baad view wahi ruka rahe
-            slideUp.fillAfter = true
-
-            // Animation smooth dikhane ke liye interpolator
-            slideUp.interpolator = android.view.animation.DecelerateInterpolator()
-            view.startAnimation(slideUp)
-        }
-        catch (e: Exception){
-            null
-        }
     }
 }
