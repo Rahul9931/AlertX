@@ -1,9 +1,11 @@
 package com.rahulsaini.alertx.alertXToast.builder
 
 import android.app.Activity
+import android.util.Log
 import com.rahulsaini.alertx.R
 import com.rahulsaini.alertx.alertXToast.AlertXToast
 import com.rahulsaini.alertx.alertXToast.message.ToastAlertMessage
+import com.rahulsaini.alertx.shared.model.AlertAnimationType
 import com.rahulsaini.alertx.shared.model.MessageStyle
 import com.rahulsaini.alertx.shared.model.MessageType
 
@@ -14,6 +16,12 @@ class AlertBuilder(private val activity: Activity) {
 
     fun setMessage(message:String) = apply{
         this.message = message
+    }
+
+    fun setAnimation(animation: AlertAnimationType) = apply {
+        val baseStyle = customStyle ?: getStyleFromType()
+        this.customStyle = baseStyle.copy(animationType = animation)
+        Log.d("AlertX_Debug", "setAnimation: Animation set to $animation")
     }
 
     fun setSuccess() = apply {
@@ -37,10 +45,12 @@ class AlertBuilder(private val activity: Activity) {
     }
 
     fun show(){
-        var style = getStyleFromType()
+        val style = getStyleFromType()
+        Log.d("AlertX_Debug", "show: Final animation used: ${style.animationType}")
+        
         var styleWithIcon = MessageStyle()
         if (style.showIcon){
-            var icon = style.iconResource ?: getDefaultIconFromType()
+            val icon = style.iconResource ?: getDefaultIconFromType()
             styleWithIcon = style.copy(
                 iconResource = icon
             )
@@ -52,7 +62,10 @@ class AlertBuilder(private val activity: Activity) {
         AlertXToast.enqueue(ToastAlertMessage(activity, message, styleWithIcon))
     }
 
-    fun getStyleFromType(): MessageStyle{
+    fun getStyleFromType(): MessageStyle {
+        // FIXED: Agar customStyle set hai (e.g. setAnimation call hua hai), toh use return karein
+        customStyle?.let { return it }
+
         return when(type){
             MessageType.SUCCESS -> AlertXToast.getGlobalConfig().successStyle
             MessageType.INFO -> AlertXToast.getGlobalConfig().infoStyle

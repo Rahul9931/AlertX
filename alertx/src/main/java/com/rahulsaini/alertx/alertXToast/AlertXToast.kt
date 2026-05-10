@@ -21,25 +21,22 @@ object AlertXToast {
         QueueManager.enqueue(alertMessage)
     }
 
-    fun showSuccessToast(activity: Activity, message: String){
-        AlertBuilder(activity)
+    fun showSuccessToast(activity: Activity, message: String): AlertBuilder{
+        return AlertBuilder(activity)
             .setMessage(message)
             .setSuccess()
-            .show()
     }
 
-    fun showInfoToast(activity: Activity, message: String){
-        AlertBuilder(activity)
+    fun showInfoToast(activity: Activity, message: String): AlertBuilder{
+        return AlertBuilder(activity)
             .setMessage(message)
             .setInfo()
-            .show()
     }
 
-    fun showErrorToast(activity: Activity, message: String){
-        AlertBuilder(activity)
+    fun showErrorToast(activity: Activity, message: String): AlertBuilder{
+        return AlertBuilder(activity)
             .setMessage(message)
             .setError()
-            .show()
     }
 
     fun showCustomMessage(activity: Activity, message: String, style: MessageStyle){

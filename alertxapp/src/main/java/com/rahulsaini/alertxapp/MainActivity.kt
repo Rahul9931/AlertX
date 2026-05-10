@@ -10,6 +10,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.rahulsaini.alertx.alertXToast.AlertXToast
 import com.rahulsaini.alertx.alertXTop.AlertXTop
+import com.rahulsaini.alertx.shared.model.AlertAnimationType
 import com.rahulsaini.alertx.shared.model.MessageStyle
 
 class MainActivity : AppCompatActivity() {
@@ -29,14 +30,20 @@ class MainActivity : AppCompatActivity() {
         var btnCustom = findViewById<Button>(R.id.btn_custom_msg)
         btnSuccess.setOnClickListener {
             AlertXToast.showSuccessToast(this, "this is my success toast message")
+                .setAnimation(AlertAnimationType.ZOOM)
+                .show()
+
         }
 
         btnInfo.setOnClickListener {
             AlertXToast.showInfoToast(this, "this is my info toast message, this is my info toast message")
+                .setAnimation(AlertAnimationType.ZOOM)
+                .show()
         }
 
         btnError.setOnClickListener {
             AlertXToast.showErrorToast(this, "this is my error toast message, this is my error toast message, this is my error toast message, this is my error toast message")
+                .show()
         }
 
         btnCustom.setOnClickListener {

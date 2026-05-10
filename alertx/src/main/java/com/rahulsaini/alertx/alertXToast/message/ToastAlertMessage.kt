@@ -18,6 +18,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.os.HandlerCompat
 import androidx.core.view.isVisible
 import com.google.android.material.card.MaterialCardView
+import com.rahulsaini.alertx.shared.model.AlertAnimationType
 import kotlinx.coroutines.Runnable
 
 class ToastAlertMessage(
@@ -30,23 +31,22 @@ class ToastAlertMessage(
     private var autoDismissRunnable: Runnable? = null
     private var onDismiss: (() -> Unit)? = null
 
-    fun showWithCallback(onDismiss: ()-> Unit){
+    fun showWithCallback(onDismiss: () -> Unit) {
         this.onDismiss = onDismiss
         show()
     }
 
-    fun show(){
+    fun show() {
         val rootView = try {
             activity.window.decorView.findViewById<FrameLayout>(R.id.content)
-        }
-        catch (e: Exception){
+        } catch (e: Exception) {
             null
         } ?: return
 
         val view = createView(activity, rootView)
         applyStyle(activity, view)
         addToScreen(view, rootView)
-        
+
         // Setup click listener
         dismissOnTouch(view)
 
@@ -69,7 +69,8 @@ class ToastAlertMessage(
     }
 
     private fun applyStyle(activity: Activity, view: View) {
-        val toastContainer = view.findViewById<MaterialCardView>(com.rahulsaini.alertx.R.id.toast_msg_container)
+        val toastContainer =
+            view.findViewById<MaterialCardView>(com.rahulsaini.alertx.R.id.toast_msg_container)
         val toastMsg = view.findViewById<TextView>(com.rahulsaini.alertx.R.id.toast_txt)
         val toastImg = view.findViewById<ImageView>(com.rahulsaini.alertx.R.id.toast_img)
 
@@ -81,7 +82,7 @@ class ToastAlertMessage(
         toastMsg.setTextColor(style.textColor)
 
         toastImg.apply {
-            if (style.showIcon && style.iconResource != null){
+            if (style.showIcon && style.iconResource != null) {
                 isVisible = true
                 setImageResource(style.iconResource)
                 setColorFilter(style.iconTint)
@@ -92,10 +93,11 @@ class ToastAlertMessage(
     }
 
     private fun createView(activity: Activity, rootView: ViewGroup): View {
-        return LayoutInflater.from(activity).inflate(com.rahulsaini.alertx.R.layout.toast_message, rootView, false)
+        return LayoutInflater.from(activity)
+            .inflate(com.rahulsaini.alertx.R.layout.toast_message, rootView, false)
     }
 
-    private fun addToScreen(view: View, rootView: FrameLayout){
+    private fun addToScreen(view: View, rootView: FrameLayout) {
         val params = FrameLayout.LayoutParams(
             FrameLayout.LayoutParams.MATCH_PARENT,
             FrameLayout.LayoutParams.WRAP_CONTENT
@@ -117,7 +119,7 @@ class ToastAlertMessage(
         autoDismissHandler?.postDelayed(autoDismissRunnable!!, style.duration)
     }
 
-    private fun dismissView(view: View){
+    private fun dismissView(view: View) {
         (view.parent as? ViewGroup)?.removeView(view)
         onDismiss?.invoke()
     }
@@ -125,28 +127,55 @@ class ToastAlertMessage(
     /**
      * Modern property animation: Visuals and Touch Area move together.
      */
-    fun animationUp(view: View, onCompleted: () -> Unit){
-        // Start from below and transparent
-        view.translationY = 500f
-        view.alpha = 0f
-        
-        view.animate()
-            .translationY(0f) // Move to layout position
-            .alpha(1f)
-            .setDuration(500)
-            .setInterpolator(DecelerateInterpolator())
-            .withEndAction { onCompleted() }
-            .start()
-            
-        // REMOVED: AnimationUtils (Legacy) block that was breaking touch events
+    fun animationUp(view: View, onCompleted: () -> Unit) {
+        when (style.animationType) {
+            AlertAnimationType.SLIDE -> {
+                view.translationY = 500f
+                view.alpha = 0f
+                view.animate()
+                    .translationY(0f) // Move to layout position
+                    .alpha(1f)
+                    .setDuration(500)
+                    .setInterpolator(DecelerateInterpolator())
+                    .withEndAction { onCompleted() }
+                    .start()
+            }
+
+            AlertAnimationType.ZOOM -> {
+                view.scaleX = 0f
+                view.scaleY = 0f
+                view.alpha = 0f
+                view.animate()
+                    .scaleX(1f)
+                    .scaleY(1f)
+                    .alpha(1f)
+                    .setDuration(800)
+                    .setInterpolator(android.view.animation.OvershootInterpolator())
+                    .withEndAction { onCompleted() }
+                    .start()
+            }
+        }
     }
 
-    fun animateDown(view: View, onCompleted: ()-> Unit){
-        view.animate()
-            .translationY(300f) // Move back down
-            .alpha(0f)
-            .setDuration(300)
-            .withEndAction { onCompleted() }
-            .start()
+    fun animateDown(view: View, onCompleted: () -> Unit) {
+        when(style.animationType){
+            AlertAnimationType.SLIDE -> {
+                view.animate()
+                    .translationY(300f) // Move back down
+                    .alpha(0f)
+                    .setDuration(300)
+                    .withEndAction { onCompleted() }
+                    .start()
+            }
+            AlertAnimationType.ZOOM -> {
+                view.animate()
+                    .scaleX(0f)
+                    .scaleY(0f)
+                    .alpha(0f)
+                    .setDuration(800)
+                    .withEndAction { onCompleted() }
+                    .start()
+            }
+        }
     }
 }
