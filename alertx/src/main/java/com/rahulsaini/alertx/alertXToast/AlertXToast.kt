@@ -1,6 +1,7 @@
 package com.rahulsaini.alertx.alertXToast
 
 import android.app.Activity
+import android.app.Application
 import com.rahulsaini.alertx.alertXToast.builder.AlertBuilder
 import com.rahulsaini.alertx.alertXToast.message.ToastAlertMessage
 import com.rahulsaini.alertx.alertXToast.utils.QueueManager
@@ -11,6 +12,10 @@ object AlertXToast {
     private val globalConfig = GlobalConfig()
 
     internal fun getGlobalConfig() = globalConfig
+
+    fun initialize(activity: Application, config: GlobalConfig.() -> Unit){
+        globalConfig.apply(config)
+    }
 
     internal fun enqueue(alertMessage: ToastAlertMessage){
         QueueManager.enqueue(alertMessage)
