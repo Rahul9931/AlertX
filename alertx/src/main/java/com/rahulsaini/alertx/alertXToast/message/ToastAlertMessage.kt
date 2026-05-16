@@ -18,7 +18,12 @@ import androidx.core.content.ContextCompat
 import androidx.core.os.HandlerCompat
 import androidx.core.view.isVisible
 import com.google.android.material.card.MaterialCardView
+import com.rahulsaini.alertx.shared.helper.AlertXAnimator.slideIn
+import com.rahulsaini.alertx.shared.helper.AlertXAnimator.slideOut
+import com.rahulsaini.alertx.shared.helper.AlertXAnimator.zoomIn
+import com.rahulsaini.alertx.shared.helper.AlertXAnimator.zoomOut
 import com.rahulsaini.alertx.shared.model.AlertAnimationType
+import com.rahulsaini.alertx.shared.model.Direction
 import kotlinx.coroutines.Runnable
 
 class ToastAlertMessage(
@@ -129,52 +134,77 @@ class ToastAlertMessage(
      */
     fun animationUp(view: View, onCompleted: () -> Unit) {
         when (style.animationType) {
-            AlertAnimationType.SLIDE -> {
-                view.translationY = 500f
-                view.alpha = 0f
-                view.animate()
-                    .translationY(0f) // Move to layout position
-                    .alpha(1f)
-                    .setDuration(500)
-                    .setInterpolator(DecelerateInterpolator())
-                    .withEndAction { onCompleted() }
-                    .start()
+            AlertAnimationType.SLIDE_FROM_BOTTOM -> {
+                view.slideIn(Direction.BOTTOM, false){
+                    onCompleted()
+                }
+            }
+            AlertAnimationType.SLIDE_FROM_BOTTOM_BOUNCE ->{
+                view.slideIn(Direction.BOTTOM, true){
+                    onCompleted()
+                }
+            }
+            AlertAnimationType.SLIDE_FROM_LEFT -> {
+                view.slideIn(Direction.LEFT, false){
+                    onCompleted()
+                }
+            }
+            AlertAnimationType.SLIDE_FROM_LEFT_BOUNCE ->{
+                view.slideIn(Direction.LEFT, true){
+                    onCompleted()
+                }
+            }
+            AlertAnimationType.SLIDE_FROM_RIGHT -> {
+                view.slideIn(Direction.RIGHT, false){
+                    onCompleted()
+                }
+            }
+            AlertAnimationType.SLIDE_FROM_RIGHT_BOUNCE ->{
+                view.slideIn(Direction.RIGHT, true){
+                    onCompleted()
+                }
             }
 
             AlertAnimationType.ZOOM -> {
-                view.scaleX = 0f
-                view.scaleY = 0f
-                view.alpha = 0f
-                view.animate()
-                    .scaleX(1f)
-                    .scaleY(1f)
-                    .alpha(1f)
-                    .setDuration(800)
-                    .setInterpolator(android.view.animation.OvershootInterpolator())
-                    .withEndAction { onCompleted() }
-                    .start()
+                view.zoomIn { onCompleted() }
             }
         }
     }
 
     fun animateDown(view: View, onCompleted: () -> Unit) {
         when(style.animationType){
-            AlertAnimationType.SLIDE -> {
-                view.animate()
-                    .translationY(300f) // Move back down
-                    .alpha(0f)
-                    .setDuration(300)
-                    .withEndAction { onCompleted() }
-                    .start()
+            AlertAnimationType.SLIDE_FROM_BOTTOM -> {
+                view.slideOut(Direction.BOTTOM, false){
+                    onCompleted()
+                }
+            }
+            AlertAnimationType.SLIDE_FROM_BOTTOM_BOUNCE ->{
+                view.slideOut(Direction.BOTTOM, true){
+                    onCompleted()
+                }
+            }
+            AlertAnimationType.SLIDE_FROM_LEFT -> {
+                view.slideOut(Direction.LEFT, false){
+                    onCompleted()
+                }
+            }
+            AlertAnimationType.SLIDE_FROM_LEFT_BOUNCE ->{
+                view.slideOut(Direction.LEFT, true){
+                    onCompleted()
+                }
+            }
+            AlertAnimationType.SLIDE_FROM_RIGHT -> {
+                view.slideOut(Direction.RIGHT, false){
+                    onCompleted()
+                }
+            }
+            AlertAnimationType.SLIDE_FROM_RIGHT_BOUNCE ->{
+                view.slideOut(Direction.RIGHT, true){
+                    onCompleted()
+                }
             }
             AlertAnimationType.ZOOM -> {
-                view.animate()
-                    .scaleX(0f)
-                    .scaleY(0f)
-                    .alpha(0f)
-                    .setDuration(800)
-                    .withEndAction { onCompleted() }
-                    .start()
+                view.zoomOut { onCompleted() }
             }
         }
     }
