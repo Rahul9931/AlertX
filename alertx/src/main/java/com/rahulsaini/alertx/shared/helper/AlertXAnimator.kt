@@ -33,6 +33,24 @@ internal object AlertXAnimator {
             .start()
     }
 
+    fun View.fadeIn(duration: Long = 500, onCompleted: () -> Unit){
+        this.alpha = 0f
+        this.animate()
+            .alpha(1f)
+            .setDuration(duration)
+            .setInterpolator(DecelerateInterpolator())
+            .withEndAction { onCompleted() }
+            .start()
+    }
+    fun View.fadeOut(duration: Long = 400, onCompleted: () -> Unit){
+        this.animate()
+            .alpha(0f)
+            .setDuration(duration)
+            .setInterpolator(DecelerateInterpolator())
+            .withEndAction { onCompleted() }
+            .start()
+    }
+
     fun View.slideIn(fromDirection: Direction, useDebounce: Boolean, duration: Long = 500, onCompleted: () -> Unit){
 
         when(fromDirection){

@@ -18,6 +18,8 @@ import androidx.core.content.ContextCompat
 import androidx.core.os.HandlerCompat
 import androidx.core.view.isVisible
 import com.google.android.material.card.MaterialCardView
+import com.rahulsaini.alertx.shared.helper.AlertXAnimator.fadeIn
+import com.rahulsaini.alertx.shared.helper.AlertXAnimator.fadeOut
 import com.rahulsaini.alertx.shared.helper.AlertXAnimator.slideIn
 import com.rahulsaini.alertx.shared.helper.AlertXAnimator.slideOut
 import com.rahulsaini.alertx.shared.helper.AlertXAnimator.zoomIn
@@ -168,6 +170,10 @@ class ToastAlertMessage(
             AlertAnimationType.ZOOM -> {
                 view.zoomIn { onCompleted() }
             }
+
+            AlertAnimationType.FADE -> {
+                view.fadeIn { onCompleted() }
+            }
         }
     }
 
@@ -205,6 +211,10 @@ class ToastAlertMessage(
             }
             AlertAnimationType.ZOOM -> {
                 view.zoomOut { onCompleted() }
+            }
+
+            AlertAnimationType.FADE -> {
+                view.fadeOut { onCompleted() }
             }
         }
     }

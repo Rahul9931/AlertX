@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
         var btnCustom = findViewById<Button>(R.id.btn_custom_msg)
         btnSuccess.setOnClickListener {
             AlertXToast.showSuccessToast(this, "this is my success toast message")
-                .setAnimation(AlertAnimationType.SLIDE_FROM_RIGHT_BOUNCE)
+                .setAnimation(AlertAnimationType.FADE)
                 .show()
 
         }
