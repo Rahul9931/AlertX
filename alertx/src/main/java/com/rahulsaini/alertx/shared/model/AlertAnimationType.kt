@@ -8,5 +8,6 @@ enum class AlertAnimationType {
     SLIDE_FROM_RIGHT,
     SLIDE_FROM_RIGHT_BOUNCE,
     ZOOM,
-    FADE
+    FADE,
+    MORPH_FROM_BALL
 }

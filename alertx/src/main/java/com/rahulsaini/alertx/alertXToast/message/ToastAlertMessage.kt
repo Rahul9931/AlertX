@@ -11,7 +11,6 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.DecelerateInterpolator
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -20,6 +19,8 @@ import androidx.core.view.isVisible
 import com.google.android.material.card.MaterialCardView
 import com.rahulsaini.alertx.shared.helper.AlertXAnimator.fadeIn
 import com.rahulsaini.alertx.shared.helper.AlertXAnimator.fadeOut
+import com.rahulsaini.alertx.shared.helper.AlertXAnimator.morphIn
+import com.rahulsaini.alertx.shared.helper.AlertXAnimator.morphOut
 import com.rahulsaini.alertx.shared.helper.AlertXAnimator.slideIn
 import com.rahulsaini.alertx.shared.helper.AlertXAnimator.slideOut
 import com.rahulsaini.alertx.shared.helper.AlertXAnimator.zoomIn
@@ -68,7 +69,6 @@ class ToastAlertMessage(
     private fun dismissOnTouch(view: View) {
         view.setOnClickListener {
             Log.d("check_toast", "Toast clicked! Animating down...")
-            // Pehle animate down karein, phir remove karein
             animateDown(view) {
                 dismissView(view)
             }
@@ -81,7 +81,6 @@ class ToastAlertMessage(
         val toastMsg = view.findViewById<TextView>(com.rahulsaini.alertx.R.id.toast_txt)
         val toastImg = view.findViewById<ImageView>(com.rahulsaini.alertx.R.id.toast_img)
 
-        // CardBackgroundColor use karein taaki radius maintain rahe
         toastContainer.setCardBackgroundColor(
             ContextCompat.getColor(activity, style.containerBackgroundColorRes)
         )
@@ -109,8 +108,9 @@ class ToastAlertMessage(
             FrameLayout.LayoutParams.MATCH_PARENT,
             FrameLayout.LayoutParams.WRAP_CONTENT
         )
-        params.gravity = Gravity.BOTTOM
-        params.setMargins(40, 0, 40, 100) // Space from sides and bottom
+        // Set gravity to CENTER_HORIZONTAL so MORPH_FROM_BALL starts in the middle
+        params.gravity = Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL
+        params.setMargins(40, 0, 40, 100)
         rootView.addView(view, params)
     }
 
@@ -131,90 +131,66 @@ class ToastAlertMessage(
         onDismiss?.invoke()
     }
 
-    /**
-     * Modern property animation: Visuals and Touch Area move together.
-     */
     fun animationUp(view: View, onCompleted: () -> Unit) {
         when (style.animationType) {
             AlertAnimationType.SLIDE_FROM_BOTTOM -> {
-                view.slideIn(Direction.BOTTOM, false){
-                    onCompleted()
-                }
+                view.slideIn(Direction.BOTTOM, false) { onCompleted() }
             }
-            AlertAnimationType.SLIDE_FROM_BOTTOM_BOUNCE ->{
-                view.slideIn(Direction.BOTTOM, true){
-                    onCompleted()
-                }
+            AlertAnimationType.SLIDE_FROM_BOTTOM_BOUNCE -> {
+                view.slideIn(Direction.BOTTOM, true) { onCompleted() }
             }
             AlertAnimationType.SLIDE_FROM_LEFT -> {
-                view.slideIn(Direction.LEFT, false){
-                    onCompleted()
-                }
+                view.slideIn(Direction.LEFT, false) { onCompleted() }
             }
-            AlertAnimationType.SLIDE_FROM_LEFT_BOUNCE ->{
-                view.slideIn(Direction.LEFT, true){
-                    onCompleted()
-                }
+            AlertAnimationType.SLIDE_FROM_LEFT_BOUNCE -> {
+                view.slideIn(Direction.LEFT, true) { onCompleted() }
             }
             AlertAnimationType.SLIDE_FROM_RIGHT -> {
-                view.slideIn(Direction.RIGHT, false){
-                    onCompleted()
-                }
+                view.slideIn(Direction.RIGHT, false) { onCompleted() }
             }
-            AlertAnimationType.SLIDE_FROM_RIGHT_BOUNCE ->{
-                view.slideIn(Direction.RIGHT, true){
-                    onCompleted()
-                }
+            AlertAnimationType.SLIDE_FROM_RIGHT_BOUNCE -> {
+                view.slideIn(Direction.RIGHT, true) { onCompleted() }
             }
-
             AlertAnimationType.ZOOM -> {
                 view.zoomIn { onCompleted() }
             }
-
             AlertAnimationType.FADE -> {
                 view.fadeIn { onCompleted() }
+            }
+            AlertAnimationType.MORPH_FROM_BALL -> {
+                view.morphIn { onCompleted() }
             }
         }
     }
 
     fun animateDown(view: View, onCompleted: () -> Unit) {
-        when(style.animationType){
+        when (style.animationType) {
             AlertAnimationType.SLIDE_FROM_BOTTOM -> {
-                view.slideOut(Direction.BOTTOM, false){
-                    onCompleted()
-                }
+                view.slideOut(Direction.BOTTOM, false) { onCompleted() }
             }
-            AlertAnimationType.SLIDE_FROM_BOTTOM_BOUNCE ->{
-                view.slideOut(Direction.BOTTOM, true){
-                    onCompleted()
-                }
+            AlertAnimationType.SLIDE_FROM_BOTTOM_BOUNCE -> {
+                view.slideOut(Direction.BOTTOM, true) { onCompleted() }
             }
             AlertAnimationType.SLIDE_FROM_LEFT -> {
-                view.slideOut(Direction.LEFT, false){
-                    onCompleted()
-                }
+                view.slideOut(Direction.LEFT, false) { onCompleted() }
             }
-            AlertAnimationType.SLIDE_FROM_LEFT_BOUNCE ->{
-                view.slideOut(Direction.LEFT, true){
-                    onCompleted()
-                }
+            AlertAnimationType.SLIDE_FROM_LEFT_BOUNCE -> {
+                view.slideOut(Direction.LEFT, true) { onCompleted() }
             }
             AlertAnimationType.SLIDE_FROM_RIGHT -> {
-                view.slideOut(Direction.RIGHT, false){
-                    onCompleted()
-                }
+                view.slideOut(Direction.RIGHT, false) { onCompleted() }
             }
-            AlertAnimationType.SLIDE_FROM_RIGHT_BOUNCE ->{
-                view.slideOut(Direction.RIGHT, true){
-                    onCompleted()
-                }
+            AlertAnimationType.SLIDE_FROM_RIGHT_BOUNCE -> {
+                view.slideOut(Direction.RIGHT, true) { onCompleted() }
             }
             AlertAnimationType.ZOOM -> {
                 view.zoomOut { onCompleted() }
             }
-
             AlertAnimationType.FADE -> {
                 view.fadeOut { onCompleted() }
+            }
+            AlertAnimationType.MORPH_FROM_BALL -> {
+                view.morphOut { onCompleted() }
             }
         }
     }
