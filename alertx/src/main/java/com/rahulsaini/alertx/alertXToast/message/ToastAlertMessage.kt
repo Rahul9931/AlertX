@@ -16,6 +16,10 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.os.HandlerCompat
 import androidx.core.view.isVisible
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.OnLifecycleEvent
 import com.google.android.material.card.MaterialCardView
 import com.rahulsaini.alertx.shared.helper.AlertXAnimator.fadeIn
 import com.rahulsaini.alertx.shared.helper.AlertXAnimator.fadeOut
@@ -28,6 +32,7 @@ import com.rahulsaini.alertx.shared.helper.AlertXAnimator.zoomOut
 import com.rahulsaini.alertx.shared.model.AlertAnimationType
 import com.rahulsaini.alertx.shared.model.Direction
 import kotlinx.coroutines.Runnable
+import java.lang.ref.WeakReference
 
 class ToastAlertMessage(
     private val activity: Activity,
@@ -38,6 +43,7 @@ class ToastAlertMessage(
     private var autoDismissHandler: Handler? = null
     private var autoDismissRunnable: Runnable? = null
     private var onDismiss: (() -> Unit)? = null
+    private var activityRef = WeakReference(activity)
 
     fun showWithCallback(onDismiss: () -> Unit) {
         this.onDismiss = onDismiss
@@ -45,6 +51,23 @@ class ToastAlertMessage(
     }
 
     fun show() {
+
+        var activity = activityRef.get() ?: return
+
+        if (activity.isFinishing || activity.isDestroyed) return
+
+        if (activity is LifecycleOwner){
+            if (!activity.lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)){
+                activity.lifecycle.addObserver(object : LifecycleObserver{
+                    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
+                    fun resume(){
+                        show()
+                        activity.lifecycle.removeObserver(this)
+                    }
+                })
+            }
+        }
+
         val rootView = try {
             activity.window.decorView.findViewById<FrameLayout>(R.id.content)
         } catch (e: Exception) {
