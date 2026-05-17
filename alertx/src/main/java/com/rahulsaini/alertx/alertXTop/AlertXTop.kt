@@ -34,6 +34,13 @@ object AlertXTop {
         .show()
     }
 
+    fun showWarning(activity: Activity, message: String){
+        AlertBuilder(activity)
+            .setMessage(message)
+            .setWarning()
+            .show()
+    }
+
     fun showInfo(activity: Activity, message: String){
         AlertBuilder(activity)
             .setMessage(message)

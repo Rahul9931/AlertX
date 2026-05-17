@@ -29,6 +29,11 @@ class AlertBuilder(private val activity: Activity) {
         this.customStyle = null
     }
 
+    fun setWarning() = apply {
+        this.type = MessageType.WARNING
+        this.customStyle = null
+    }
+
     fun setInfo() = apply {
         this.type = MessageType.INFO
         this.customStyle = null
@@ -68,6 +73,7 @@ class AlertBuilder(private val activity: Activity) {
 
         return when(type){
             MessageType.SUCCESS -> AlertXToast.getGlobalConfig().successStyle
+            MessageType.WARNING -> AlertXToast.getGlobalConfig().warningStyle
             MessageType.INFO -> AlertXToast.getGlobalConfig().infoStyle
             MessageType.ERROR -> AlertXToast.getGlobalConfig().errorStyle
             MessageType.CUSTOM -> customStyle!!
@@ -77,6 +83,7 @@ class AlertBuilder(private val activity: Activity) {
     fun getDefaultIconFromType(): Int{
         return when(type){
             MessageType.SUCCESS -> R.drawable.check_circle_24
+            MessageType.WARNING -> R.drawable.info_24
             MessageType.INFO -> R.drawable.info_24
             MessageType.ERROR -> R.drawable.error_24
             MessageType.CUSTOM -> R.drawable.info_24

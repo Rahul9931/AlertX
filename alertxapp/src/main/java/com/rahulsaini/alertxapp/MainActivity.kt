@@ -26,24 +26,31 @@ class MainActivity : AppCompatActivity() {
         }
         var btnSuccess = findViewById<Button>(R.id.btn_success)
         var btnInfo = findViewById<Button>(R.id.btn_info)
+        var btnWarn = findViewById<Button>(R.id.btn_warn)
         var btnError = findViewById<Button>(R.id.btn_error)
         var btnCustom = findViewById<Button>(R.id.btn_custom_msg)
         btnSuccess.setOnClickListener {
             AlertXToast.showSuccessToast(this, "this is my success toast message")
-                .setAnimation(AlertAnimationType.MORPH_FROM_BALL)
+                .setAnimation(AlertAnimationType.SLIDE_FROM_BOTTOM)
                 .show()
 
         }
 
+        btnWarn.setOnClickListener {
+            AlertXToast.showWarningToast(this, "this is my warning toast message, this is my warning toast message")
+                .setAnimation(AlertAnimationType.SLIDE_FROM_LEFT)
+                .show()
+        }
+
         btnInfo.setOnClickListener {
             AlertXToast.showInfoToast(this, "this is my info toast message, this is my info toast message")
-                .setAnimation(AlertAnimationType.MORPH_FROM_BALL)
+                .setAnimation(AlertAnimationType.SLIDE_FROM_RIGHT)
                 .show()
         }
 
         btnError.setOnClickListener {
             AlertXToast.showErrorToast(this, "this is my error toast message, this is my error toast message, this is my error toast message, this is my error toast message")
-                .setAnimation(AlertAnimationType.MORPH_FROM_BALL)
+                .setAnimation(AlertAnimationType.FADE)
                 .show()
         }
 

@@ -7,6 +7,10 @@ class GlobalConfig{
     var successStyle: MessageStyle = MessageStyle(
         containerBackgroundColorRes = R.color.alertx_success
     )
+
+    var warningStyle: MessageStyle = MessageStyle(
+        containerBackgroundColorRes = R.color.alertx_warning
+    )
     var infoStyle: MessageStyle = MessageStyle(
         containerBackgroundColorRes = R.color.alertx_info
     )

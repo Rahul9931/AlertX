@@ -27,6 +27,12 @@ object AlertXToast {
             .setSuccess()
     }
 
+    fun showWarningToast(activity: Activity, message: String): AlertBuilder{
+        return AlertBuilder(activity)
+            .setMessage(message)
+            .setWarning()
+    }
+
     fun showInfoToast(activity: Activity, message: String): AlertBuilder{
         return AlertBuilder(activity)
             .setMessage(message)

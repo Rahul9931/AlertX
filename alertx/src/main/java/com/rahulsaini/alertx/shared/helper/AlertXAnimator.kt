@@ -59,7 +59,7 @@ internal object AlertXAnimator {
             .start()
     }
 
-    fun View.slideIn(fromDirection: Direction, useDebounce: Boolean, duration: Long = 1200, onCompleted: () -> Unit){
+    fun View.slideIn(fromDirection: Direction, useDebounce: Boolean, duration: Long = 500, onCompleted: () -> Unit){
         when(fromDirection){
             Direction.LEFT -> this.translationX = -this.getScreenWidth()
             Direction.RIGHT -> this.translationX = this.getScreenWidth()
