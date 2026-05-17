@@ -169,6 +169,7 @@ internal object AlertXAnimator {
                     morphAnimator.addListener(object : AnimatorListenerAdapter() {
                         override fun onAnimationEnd(animation: Animator) {
                             // Reset to final layout parameters
+                            val params = this@morphIn.layoutParams
                             params.width = targetWidth
                             params.height = ViewGroup.LayoutParams.WRAP_CONTENT
                             this@morphIn.layoutParams = params

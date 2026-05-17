@@ -72,9 +72,12 @@ class TopAlertMessage(
     }
 
     fun show(){
-        val activity = activityRef.get() ?: return   // if null activity destroyed
+        val activity = activityRef.get()   // if null activity destroyed
 
-        if (activity.isFinishing || activity.isDestroyed) return   // don't show if finishing
+        if ( activity == null || activity.isFinishing || activity.isDestroyed){
+            onDismiss?.invoke()
+            return
+        }
 
         // lifecycle check
         if (activity is LifecycleOwner){

@@ -52,9 +52,12 @@ class ToastAlertMessage(
 
     fun show() {
 
-        var activity = activityRef.get() ?: return
+        var activity = activityRef.get()
 
-        if (activity.isFinishing || activity.isDestroyed) return
+        if ( activity == null || activity.isFinishing || activity.isDestroyed){
+            onDismiss?.invoke()
+            return
+        }
 
         if (activity is LifecycleOwner){
             if (!activity.lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)){
@@ -65,6 +68,7 @@ class ToastAlertMessage(
                         activity.lifecycle.removeObserver(this)
                     }
                 })
+                return
             }
         }
 
@@ -134,7 +138,9 @@ class ToastAlertMessage(
         // Set gravity to CENTER_HORIZONTAL so MORPH_FROM_BALL starts in the middle
         params.gravity = Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL
         params.setMargins(40, 0, 40, 100)
+        view.elevation = 100f
         rootView.addView(view, params)
+        view.bringToFront()
     }
 
     private fun scheduleAutoDismiss(view: View) {
