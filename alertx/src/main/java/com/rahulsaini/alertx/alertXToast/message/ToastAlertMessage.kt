@@ -16,6 +16,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.os.HandlerCompat
 import androidx.core.view.isVisible
+import androidx.core.view.setMargins
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
@@ -30,6 +31,7 @@ import com.rahulsaini.alertx.shared.helper.AlertXAnimator.slideOut
 import com.rahulsaini.alertx.shared.helper.AlertXAnimator.zoomIn
 import com.rahulsaini.alertx.shared.helper.AlertXAnimator.zoomOut
 import com.rahulsaini.alertx.shared.model.AlertAnimationType
+import com.rahulsaini.alertx.shared.model.AlertPosition
 import com.rahulsaini.alertx.shared.model.Direction
 import kotlinx.coroutines.Runnable
 import java.lang.ref.WeakReference
@@ -136,8 +138,14 @@ class ToastAlertMessage(
             FrameLayout.LayoutParams.WRAP_CONTENT
         )
         // Set gravity to CENTER_HORIZONTAL so MORPH_FROM_BALL starts in the middle
-        params.gravity = Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL
-        params.setMargins(40, 0, 40, 100)
+        if (style.position == AlertPosition.TOP){
+            params.gravity = Gravity.TOP or Gravity.CENTER_HORIZONTAL
+            params.setMargins(20, 100, 20, 0)
+        }
+        else{
+            params.gravity = Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL
+            params.setMargins(20, 0, 20, 100)
+        }
         view.elevation = 100f
         rootView.addView(view, params)
         view.bringToFront()
@@ -161,12 +169,13 @@ class ToastAlertMessage(
     }
 
     fun animationUp(view: View, onCompleted: () -> Unit) {
+        val verticalDir = if (style.position == AlertPosition.TOP) Direction.TOP else Direction.BOTTOM
         when (style.animationType) {
-            AlertAnimationType.SLIDE_FROM_BOTTOM -> {
-                view.slideIn(Direction.BOTTOM, false) { onCompleted() }
+            AlertAnimationType.SLIDE_FROM_VERTICAL -> {
+                view.slideIn(verticalDir, false) { onCompleted() }
             }
-            AlertAnimationType.SLIDE_FROM_BOTTOM_BOUNCE -> {
-                view.slideIn(Direction.BOTTOM, true) { onCompleted() }
+            AlertAnimationType.SLIDE_FROM_VERTICAL_BOUNCE -> {
+                view.slideIn(verticalDir, true) { onCompleted() }
             }
             AlertAnimationType.SLIDE_FROM_LEFT -> {
                 view.slideIn(Direction.LEFT, false) { onCompleted() }
@@ -187,18 +196,19 @@ class ToastAlertMessage(
                 view.fadeIn { onCompleted() }
             }
             AlertAnimationType.MORPH_FROM_BALL -> {
-                view.morphIn { onCompleted() }
+                view.morphIn(position = style.position) { onCompleted() }
             }
         }
     }
 
     fun animateDown(view: View, onCompleted: () -> Unit) {
+        val verticalDir = if (style.position == AlertPosition.TOP) Direction.TOP else Direction.BOTTOM
         when (style.animationType) {
-            AlertAnimationType.SLIDE_FROM_BOTTOM -> {
-                view.slideOut(Direction.BOTTOM, false) { onCompleted() }
+            AlertAnimationType.SLIDE_FROM_VERTICAL -> {
+                view.slideOut(verticalDir, false) { onCompleted() }
             }
-            AlertAnimationType.SLIDE_FROM_BOTTOM_BOUNCE -> {
-                view.slideOut(Direction.BOTTOM, true) { onCompleted() }
+            AlertAnimationType.SLIDE_FROM_VERTICAL_BOUNCE -> {
+                view.slideOut(verticalDir, true) { onCompleted() }
             }
             AlertAnimationType.SLIDE_FROM_LEFT -> {
                 view.slideOut(Direction.LEFT, false) { onCompleted() }
@@ -219,7 +229,7 @@ class ToastAlertMessage(
                 view.fadeOut { onCompleted() }
             }
             AlertAnimationType.MORPH_FROM_BALL -> {
-                view.morphOut { onCompleted() }
+                view.morphOut(position = style.position) { onCompleted() }
             }
         }
     }

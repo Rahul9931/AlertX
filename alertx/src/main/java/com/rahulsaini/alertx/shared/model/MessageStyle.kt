@@ -11,5 +11,6 @@ data class MessageStyle(
     val showIcon: Boolean = true,
     val iconResource: Int? = null,
     val iconTint: Int = Color.WHITE,
-    val animationType: AlertAnimationType = AlertAnimationType.SLIDE_FROM_BOTTOM
+    val animationType: AlertAnimationType = AlertAnimationType.SLIDE_FROM_VERTICAL,
+    val position: AlertPosition = AlertPosition.BOTTOM
 )

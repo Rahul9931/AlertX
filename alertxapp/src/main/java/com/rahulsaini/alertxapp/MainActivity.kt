@@ -11,6 +11,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.rahulsaini.alertx.alertXToast.AlertXToast
 import com.rahulsaini.alertx.alertXTop.AlertXTop
 import com.rahulsaini.alertx.shared.model.AlertAnimationType
+import com.rahulsaini.alertx.shared.model.AlertPosition
 import com.rahulsaini.alertx.shared.model.MessageStyle
 
 class MainActivity : AppCompatActivity() {
@@ -31,26 +32,30 @@ class MainActivity : AppCompatActivity() {
         var btnCustom = findViewById<Button>(R.id.btn_custom_msg)
         btnSuccess.setOnClickListener {
             AlertXToast.showSuccessToast(this, "this is my success toast message")
-                .setAnimation(AlertAnimationType.SLIDE_FROM_BOTTOM)
+                .setPosition(AlertPosition.TOP)
+                .setAnimation(AlertAnimationType.SLIDE_FROM_VERTICAL)
                 .show()
 
         }
 
         btnWarn.setOnClickListener {
             AlertXToast.showWarningToast(this, "this is my warning toast message, this is my warning toast message")
-                .setAnimation(AlertAnimationType.SLIDE_FROM_LEFT)
+                .setPosition(AlertPosition.TOP)
+                .setAnimation(AlertAnimationType.SLIDE_FROM_VERTICAL_BOUNCE)
                 .show()
         }
 
         btnInfo.setOnClickListener {
             AlertXToast.showInfoToast(this, "this is my info toast message, this is my info toast message")
-                .setAnimation(AlertAnimationType.SLIDE_FROM_RIGHT)
+                .setPosition(AlertPosition.BOTTOM)
+                .setAnimation(AlertAnimationType.SLIDE_FROM_VERTICAL_BOUNCE)
                 .show()
         }
 
         btnError.setOnClickListener {
             AlertXToast.showErrorToast(this, "this is my error toast message, this is my error toast message, this is my error toast message, this is my error toast message")
-                .setAnimation(AlertAnimationType.FADE)
+                .setPosition(AlertPosition.BOTTOM)
+                .setAnimation(AlertAnimationType.SLIDE_FROM_VERTICAL_BOUNCE)
                 .show()
         }
 

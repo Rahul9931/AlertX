@@ -10,6 +10,7 @@ import android.view.animation.OvershootInterpolator
 import android.widget.ImageView
 import android.widget.TextView
 import com.google.android.material.card.MaterialCardView
+import com.rahulsaini.alertx.shared.model.AlertPosition
 import com.rahulsaini.alertx.shared.model.Direction
 
 internal object AlertXAnimator {
@@ -64,6 +65,7 @@ internal object AlertXAnimator {
             Direction.LEFT -> this.translationX = -this.getScreenWidth()
             Direction.RIGHT -> this.translationX = this.getScreenWidth()
             Direction.BOTTOM -> this.translationY = 600f
+            Direction.TOP -> this.translationY = -600f
         }
         // Using standard Android OvershootInterpolator as requested
         val interpolator = if (useDebounce) OvershootInterpolator(1.2f) else DecelerateInterpolator()
@@ -88,6 +90,7 @@ internal object AlertXAnimator {
             Direction.LEFT -> animator.translationX(-this.getScreenWidth())
             Direction.RIGHT -> animator.translationX(this.getScreenWidth())
             Direction.BOTTOM -> animator.translationY(600f)
+            Direction.TOP -> animator.translationY(-600f)
         }
         animator.start()
     }
@@ -96,7 +99,7 @@ internal object AlertXAnimator {
      * Morph In: Rises as a ball and expands into a toast.
      * Fixed circle shape issues by overriding minHeight and managing text visibility.
      */
-    fun View.morphIn(duration: Long = 1000, onCompleted: () -> Unit) {
+    fun View.morphIn(duration: Long = 400,position: AlertPosition, onCompleted: () -> Unit) {
         val cardView = this as? MaterialCardView ?: return
         val textView = findViewById<TextView>(com.rahulsaini.alertx.R.id.toast_txt)
         val iconView = findViewById<ImageView>(com.rahulsaini.alertx.R.id.toast_img)
@@ -128,13 +131,13 @@ internal object AlertXAnimator {
                 iv.translationY = ballCenter - (iv.height / 2f) - iv.top
             }
 
-            this.translationY = 600f
+            this.translationY = if (position == AlertPosition.TOP) -600f else 600f
             this.alpha = 1f
 
             // 1. Rise up phase
             this.animate()
                 .translationY(0f)
-                .setDuration(400)
+                .setDuration(duration)
                 .setInterpolator(DecelerateInterpolator())
                 .withEndAction {
                     // 2. Expand phase (Morph)
@@ -185,7 +188,7 @@ internal object AlertXAnimator {
     /**
      * Morph Out: Shrinks back to a ball and slides down.
      */
-    fun View.morphOut(duration: Long = 500, onCompleted: () -> Unit) {
+    fun View.morphOut(duration: Long = 300, position: AlertPosition, onCompleted: () -> Unit) {
         val cardView = this as? MaterialCardView ?: return
         val textView = findViewById<TextView>(com.rahulsaini.alertx.R.id.toast_txt)
         val iconView = findViewById<ImageView>(com.rahulsaini.alertx.R.id.toast_img)
@@ -226,10 +229,11 @@ internal object AlertXAnimator {
         morphAnimator.addListener(object : AnimatorListenerAdapter() {
             override fun onAnimationEnd(animation: Animator) {
                 // Slide ball down out of screen
+                val exitY = if (position == AlertPosition.TOP) -600f else 600f
                 this@morphOut.animate()
-                    .translationY(600f)
+                    .translationY(exitY)
                     .alpha(0f)
-                    .setDuration(300)
+                    .setDuration(duration)
                     .withEndAction { onCompleted() }
                     .start()
             }

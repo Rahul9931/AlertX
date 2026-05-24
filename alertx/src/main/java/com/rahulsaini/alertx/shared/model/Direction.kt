@@ -1,5 +1,5 @@
 package com.rahulsaini.alertx.shared.model
 
 enum class Direction {
-    LEFT, RIGHT, BOTTOM
+    LEFT, RIGHT, BOTTOM, TOP
 }

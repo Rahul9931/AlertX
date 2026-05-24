@@ -6,6 +6,7 @@ import com.rahulsaini.alertx.R
 import com.rahulsaini.alertx.alertXToast.AlertXToast
 import com.rahulsaini.alertx.alertXToast.message.ToastAlertMessage
 import com.rahulsaini.alertx.shared.model.AlertAnimationType
+import com.rahulsaini.alertx.shared.model.AlertPosition
 import com.rahulsaini.alertx.shared.model.MessageStyle
 import com.rahulsaini.alertx.shared.model.MessageType
 
@@ -24,6 +25,10 @@ class AlertBuilder(private val activity: Activity) {
         Log.d("AlertX_Debug", "setAnimation: Animation set to $animation")
     }
 
+    fun setPosition(position: AlertPosition) = apply {
+        val baseStyle = customStyle ?: getStyleFromType()
+        this.customStyle = baseStyle.copy(position = position)
+    }
     fun setSuccess() = apply {
         this.type = MessageType.SUCCESS
         this.customStyle = null
