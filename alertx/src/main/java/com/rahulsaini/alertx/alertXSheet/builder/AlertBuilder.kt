@@ -1,9 +1,12 @@
-package com.rahulsaini.alertx.alertXTop.builder
+package com.rahulsaini.alertx.alertXSheet.builder
 
 import android.app.Activity
+import android.util.Log
 import com.rahulsaini.alertx.R
-import com.rahulsaini.alertx.alertXTop.AlertXTop
-import com.rahulsaini.alertx.alertXTop.message.TopAlertMessage
+import com.rahulsaini.alertx.alertXSheet.AlertXSheet
+import com.rahulsaini.alertx.alertXSheet.message.SheetAlertMessage
+import com.rahulsaini.alertx.shared.model.AlertAnimationType
+import com.rahulsaini.alertx.shared.model.AlertPosition
 import com.rahulsaini.alertx.shared.model.MessageStyle
 import com.rahulsaini.alertx.shared.model.MessageType
 
@@ -21,8 +24,20 @@ class AlertBuilder(private val activity: Activity){
         this.customStyle = null
     }
 
+    fun setPosition(position: AlertPosition) = apply {
+        val baseStyle = customStyle ?: getStyleFromType()
+        Log.d("AlertX_Debug", "setPosition: Position set to $position")
+        this.customStyle = baseStyle.copy(position = position)
+        Log.d("AlertX_Debug", "custom style -> ${this.customStyle}")
+    }
+
+    fun setAnimation(animation: AlertAnimationType) = apply {
+        val baseStyle = customStyle ?: getStyleFromType()
+        this.customStyle = baseStyle.copy(animationType = animation)
+    }
+
     fun setWarning() = apply {
-        this.type = MessageType.SUCCESS
+        this.type = MessageType.WARNING
         this.customStyle = null
     }
 
@@ -55,16 +70,19 @@ class AlertBuilder(private val activity: Activity){
         }
 
 
-        AlertXTop.enqueue(TopAlertMessage(activity, message, styleWithIcon))
+        AlertXSheet.enqueue(SheetAlertMessage(activity, message, styleWithIcon))
     }
 
     fun getStyleFromType(): MessageStyle {
+
+        customStyle?.let { return it }
+
         return when(type){
             MessageType.CUSTOM -> customStyle!!
-            MessageType.SUCCESS -> AlertXTop.getGlobalConfigStyle().successStyle
-            MessageType.WARNING -> AlertXTop.getGlobalConfigStyle().warningStyle
-            MessageType.INFO -> AlertXTop.getGlobalConfigStyle().infoStyle
-            MessageType.ERROR -> AlertXTop.getGlobalConfigStyle().errorStyle
+            MessageType.SUCCESS -> AlertXSheet.getGlobalConfigStyle().successStyle
+            MessageType.WARNING -> AlertXSheet.getGlobalConfigStyle().warningStyle
+            MessageType.INFO -> AlertXSheet.getGlobalConfigStyle().infoStyle
+            MessageType.ERROR -> AlertXSheet.getGlobalConfigStyle().errorStyle
         }
     }
 

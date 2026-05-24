@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.rahulsaini.alertx.alertXToast.AlertXToast
-import com.rahulsaini.alertx.alertXTop.AlertXTop
+import com.rahulsaini.alertx.alertXSheet.AlertXSheet
 import com.rahulsaini.alertx.shared.model.AlertAnimationType
 import com.rahulsaini.alertx.shared.model.AlertPosition
 import com.rahulsaini.alertx.shared.model.MessageStyle
@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
         var btnError = findViewById<Button>(R.id.btn_error)
         var btnCustom = findViewById<Button>(R.id.btn_custom_msg)
         btnSuccess.setOnClickListener {
-            AlertXToast.showSuccessToast(this, "this is my success toast message")
+            AlertXSheet.showSuccess(this, "this is my success toast message")
                 .setPosition(AlertPosition.TOP)
                 .setAnimation(AlertAnimationType.SLIDE_FROM_VERTICAL)
                 .show()
@@ -39,23 +39,21 @@ class MainActivity : AppCompatActivity() {
         }
 
         btnWarn.setOnClickListener {
-            AlertXToast.showWarningToast(this, "this is my warning toast message, this is my warning toast message")
-                .setPosition(AlertPosition.TOP)
+            AlertXSheet.showWarning(this, "this is my warning toast message, this is my warning toast message")
+                .setPosition(AlertPosition.BOTTOM)
                 .setAnimation(AlertAnimationType.SLIDE_FROM_VERTICAL_BOUNCE)
                 .show()
         }
 
         btnInfo.setOnClickListener {
-            AlertXToast.showInfoToast(this, "this is my info toast message, this is my info toast message")
-                .setPosition(AlertPosition.BOTTOM)
-                .setAnimation(AlertAnimationType.SLIDE_FROM_VERTICAL_BOUNCE)
+            AlertXSheet.showInfo(this, "this is my info toast message, this is my info toast message")
                 .show()
         }
 
         btnError.setOnClickListener {
-            AlertXToast.showErrorToast(this, "this is my error toast message, this is my error toast message, this is my error toast message, this is my error toast message")
+            AlertXSheet.showError(this, "this is my error toast message, this is my error toast message, this is my error toast message, this is my error toast message")
                 .setPosition(AlertPosition.BOTTOM)
-                .setAnimation(AlertAnimationType.SLIDE_FROM_VERTICAL_BOUNCE)
+                .setAnimation(AlertAnimationType.SLIDE_FROM_RIGHT)
                 .show()
         }
 

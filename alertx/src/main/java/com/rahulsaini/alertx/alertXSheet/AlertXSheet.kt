@@ -1,20 +1,20 @@
-package com.rahulsaini.alertx.alertXTop
+package com.rahulsaini.alertx.alertXSheet
 
 import android.app.Activity
 import android.app.Application
-import com.rahulsaini.alertx.alertXTop.message.TopAlertMessage
-import com.rahulsaini.alertx.alertXTop.builder.AlertBuilder
+import com.rahulsaini.alertx.alertXSheet.message.SheetAlertMessage
+import com.rahulsaini.alertx.alertXSheet.builder.AlertBuilder
 import com.rahulsaini.alertx.shared.config.GlobalConfig
 import com.rahulsaini.alertx.shared.model.MessageStyle
-import com.rahulsaini.alertx.alertXTop.utils.QueueManager
+import com.rahulsaini.alertx.alertXSheet.utils.QueueManager
 
-object AlertXTop {
+object AlertXSheet {
 
     private val globalConfig = GlobalConfig()
 
     internal fun getGlobalConfigStyle() = globalConfig
 
-    internal fun enqueue(alertMessage: TopAlertMessage){
+    internal fun enqueue(alertMessage: SheetAlertMessage){
         QueueManager.enqueue(alertMessage)
     }
 
@@ -27,32 +27,28 @@ object AlertXTop {
     }
 
 // Quick Methods
-    fun showSuccess(activity: Activity, message: String){
-    AlertBuilder(activity)
+    fun showSuccess(activity: Activity, message: String): AlertBuilder{
+        return AlertBuilder(activity)
         .setMessage(message)
         .setSuccess()
-        .show()
     }
 
-    fun showWarning(activity: Activity, message: String){
-        AlertBuilder(activity)
+    fun showWarning(activity: Activity, message: String): AlertBuilder{
+        return AlertBuilder(activity)
             .setMessage(message)
             .setWarning()
-            .show()
     }
 
-    fun showInfo(activity: Activity, message: String){
-        AlertBuilder(activity)
+    fun showInfo(activity: Activity, message: String): AlertBuilder{
+        return AlertBuilder(activity)
             .setMessage(message)
             .setInfo()
-            .show()
     }
 
-    fun showError(activity: Activity, message: String){
-        AlertBuilder(activity)
+    fun showError(activity: Activity, message: String): AlertBuilder{
+        return AlertBuilder(activity)
             .setMessage(message)
             .setError()
-            .show()
     }
 
 //    custom message for full control of the style
