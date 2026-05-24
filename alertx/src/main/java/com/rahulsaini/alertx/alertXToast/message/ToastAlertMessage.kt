@@ -196,7 +196,11 @@ class ToastAlertMessage(
                 view.fadeIn { onCompleted() }
             }
             AlertAnimationType.MORPH_FROM_BALL -> {
-                view.morphIn(position = style.position) { onCompleted() }
+                view.morphIn(
+                    position = style.position,
+                    textId = com.rahulsaini.alertx.R.id.toast_txt,
+                    imageId = com.rahulsaini.alertx.R.id.toast_img
+                ) { onCompleted() }
             }
         }
     }
@@ -229,7 +233,11 @@ class ToastAlertMessage(
                 view.fadeOut { onCompleted() }
             }
             AlertAnimationType.MORPH_FROM_BALL -> {
-                view.morphOut(position = style.position) { onCompleted() }
+                view.morphOut(
+                    position = style.position,
+                    textId = com.rahulsaini.alertx.R.id.toast_txt,
+                    imageId = com.rahulsaini.alertx.R.id.toast_img
+                ) { onCompleted() }
             }
         }
     }

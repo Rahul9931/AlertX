@@ -99,10 +99,10 @@ internal object AlertXAnimator {
      * Morph In: Rises as a ball and expands into a toast.
      * Fixed circle shape issues by overriding minHeight and managing text visibility.
      */
-    fun View.morphIn(duration: Long = 400,position: AlertPosition, onCompleted: () -> Unit) {
+    fun View.morphIn(duration: Long = 400,position: AlertPosition, textId:Int, imageId:Int, onCompleted: () -> Unit) {
         val cardView = this as? MaterialCardView ?: return
-        val textView = findViewById<TextView>(com.rahulsaini.alertx.R.id.toast_txt)
-        val iconView = findViewById<ImageView>(com.rahulsaini.alertx.R.id.toast_img)
+        val textView = findViewById<TextView>(textId)
+        val iconView = findViewById<ImageView>(imageId)
 
         this.alpha = 0f 
 
@@ -188,10 +188,10 @@ internal object AlertXAnimator {
     /**
      * Morph Out: Shrinks back to a ball and slides down.
      */
-    fun View.morphOut(duration: Long = 300, position: AlertPosition, onCompleted: () -> Unit) {
+    fun View.morphOut(duration: Long = 300, position: AlertPosition, textId:Int, imageId:Int, onCompleted: () -> Unit) {
         val cardView = this as? MaterialCardView ?: return
-        val textView = findViewById<TextView>(com.rahulsaini.alertx.R.id.toast_txt)
-        val iconView = findViewById<ImageView>(com.rahulsaini.alertx.R.id.toast_img)
+        val textView = findViewById<TextView>(textId)
+        val iconView = findViewById<ImageView>(imageId)
         
         val startWidth = this.width
         val startHeight = this.height

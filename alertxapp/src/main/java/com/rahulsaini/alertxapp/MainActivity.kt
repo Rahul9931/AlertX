@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
         btnWarn.setOnClickListener {
             AlertXSheet.showWarning(this, "this is my warning toast message, this is my warning toast message")
                 .setPosition(AlertPosition.BOTTOM)
-                .setAnimation(AlertAnimationType.SLIDE_FROM_VERTICAL_BOUNCE)
+                .setAnimation(AlertAnimationType.MORPH_FROM_BALL)
                 .show()
         }
 
@@ -52,8 +52,8 @@ class MainActivity : AppCompatActivity() {
 
         btnError.setOnClickListener {
             AlertXSheet.showError(this, "this is my error toast message, this is my error toast message, this is my error toast message, this is my error toast message")
-                .setPosition(AlertPosition.BOTTOM)
-                .setAnimation(AlertAnimationType.SLIDE_FROM_RIGHT)
+                .setPosition(AlertPosition.TOP)
+                .setAnimation(AlertAnimationType.MORPH_FROM_BALL)
                 .show()
         }
 

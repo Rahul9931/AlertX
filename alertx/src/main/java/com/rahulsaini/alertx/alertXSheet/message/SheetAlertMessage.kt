@@ -21,6 +21,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.OnLifecycleEvent
+import com.google.android.material.card.MaterialCardView
 import com.rahulsaini.alertx.shared.helper.AlertXAnimator.fadeIn
 import com.rahulsaini.alertx.shared.helper.AlertXAnimator.fadeOut
 import com.rahulsaini.alertx.shared.helper.AlertXAnimator.morphIn
@@ -139,11 +140,11 @@ class SheetAlertMessage(
     private fun applyStyle(activity: Activity, view: View) {
         val txt_message = view.findViewById<TextView>(com.rahulsaini.alertx.R.id.txt_message)
         val messageContainer =
-            view.findViewById<ConstraintLayout>(com.rahulsaini.alertx.R.id.message_container)
+            view.findViewById<MaterialCardView>(com.rahulsaini.alertx.R.id.message_container)
         val iconRes = view.findViewById<ImageView>(com.rahulsaini.alertx.R.id.img_message)
         txt_message.text = message
         txt_message.setTextColor(style.textColor)
-        messageContainer.setBackgroundColor(
+        messageContainer.setCardBackgroundColor(
             ContextCompat.getColor(activity, style.containerBackgroundColorRes)
         )
         iconRes.apply {
@@ -195,7 +196,11 @@ class SheetAlertMessage(
             }
 
             AlertAnimationType.MORPH_FROM_BALL -> {
-                view.morphIn(position = style.position) { onCompleted() }
+                view.morphIn(
+                    position = style.position,
+                    textId = com.rahulsaini.alertx.R.id.txt_message,
+                    imageId = com.rahulsaini.alertx.R.id.img_message
+                ) { onCompleted() }
             }
         }
     }
@@ -237,7 +242,11 @@ class SheetAlertMessage(
             }
 
             AlertAnimationType.MORPH_FROM_BALL -> {
-                view.morphOut(position = style.position) { onCompleted() }
+                view.morphOut(
+                    position = style.position,
+                    textId = com.rahulsaini.alertx.R.id.txt_message,
+                    imageId = com.rahulsaini.alertx.R.id.img_message
+                ) { onCompleted() }
             }
         }
     }
@@ -251,9 +260,10 @@ class SheetAlertMessage(
         // Align to top of the screen
         Log.d("check_position", "position -> ${style.position}")
         if (style.position == AlertPosition.TOP) {
-            params.gravity = Gravity.TOP
+            params.gravity = Gravity.TOP or Gravity.CENTER_HORIZONTAL
+            params.setMargins(0,0,0,0)
         } else {
-            params.gravity = Gravity.BOTTOM
+            params.gravity = Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL
             params.setMargins(0,0,0,80)
         }
 
