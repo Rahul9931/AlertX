@@ -57,14 +57,12 @@ class SheetAlertMessage(
     }
 
     fun dismissView(view: View) {
+        if (isDismissed) return
+        isDismissed = true
         (view.parent as? ViewGroup)?.removeView(view)
         onDismiss?.invoke()
-        currentView?.let { view ->
-            (view.parent as? ViewGroup)?.removeView(view)
-            onDismiss?.invoke()
-            currentView = null
-
-        }
+        onDismiss = null
+        currentView = null
     }
 
     fun cancelAutoDismiss() {
