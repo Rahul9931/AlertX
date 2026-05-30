@@ -14,6 +14,7 @@ class AlertBuilder(private val activity: Activity){
     private var message: String = ""
     private var customStyle: MessageStyle? = null
     private var type = MessageType.INFO
+    private var isManualPositionSet = false
 
     fun setMessage(message:String) = apply{
         this.message = message
@@ -25,6 +26,7 @@ class AlertBuilder(private val activity: Activity){
     }
 
     fun setPosition(position: AlertPosition) = apply {
+        isManualPositionSet = true
         val baseStyle = customStyle ?: getStyleFromType()
         Log.d("AlertX_Debug", "setPosition: Position set to $position")
         this.customStyle = baseStyle.copy(position = position)
@@ -75,14 +77,23 @@ class AlertBuilder(private val activity: Activity){
 
     fun getStyleFromType(): MessageStyle {
 
-        customStyle?.let { return it }
-
-        return when(type){
+        val baseStyle = when(type){
             MessageType.CUSTOM -> customStyle!!
             MessageType.SUCCESS -> AlertXSheet.getGlobalConfigStyle().successStyle
             MessageType.WARNING -> AlertXSheet.getGlobalConfigStyle().warningStyle
             MessageType.INFO -> AlertXSheet.getGlobalConfigStyle().infoStyle
             MessageType.ERROR -> AlertXSheet.getGlobalConfigStyle().errorStyle
+        }
+
+        if (customStyle == null){
+            return baseStyle.copy(position = AlertPosition.TOP)
+        }
+
+        return if (customStyle!!.position == AlertPosition.BOTTOM && !isManualPositionSet){
+            return customStyle!!.copy(position = AlertPosition.TOP)
+        }
+        else{
+            customStyle!!
         }
     }
 

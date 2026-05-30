@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         var btnCustom = findViewById<Button>(R.id.btn_custom_msg)
         btnSuccess.setOnClickListener {
             AlertXSheet.showSuccess(this, "this is my success toast message")
-                .setPosition(AlertPosition.TOP)
+                .setPosition(AlertPosition.BOTTOM)
                 .setAnimation(AlertAnimationType.SLIDE_FROM_VERTICAL)
                 .show()
 
@@ -40,8 +40,7 @@ class MainActivity : AppCompatActivity() {
 
         btnWarn.setOnClickListener {
             AlertXSheet.showWarning(this, "this is my warning toast message, this is my warning toast message")
-                .setPosition(AlertPosition.BOTTOM)
-                .setAnimation(AlertAnimationType.MORPH_FROM_BALL)
+                .setAnimation(AlertAnimationType.SLIDE_FROM_LEFT)
                 .show()
         }
 
@@ -52,8 +51,7 @@ class MainActivity : AppCompatActivity() {
 
         btnError.setOnClickListener {
             AlertXSheet.showError(this, "this is my error toast message, this is my error toast message, this is my error toast message, this is my error toast message")
-                .setPosition(AlertPosition.TOP)
-                .setAnimation(AlertAnimationType.MORPH_FROM_BALL)
+                .setPosition(AlertPosition.BOTTOM)
                 .show()
         }
 
@@ -61,12 +59,14 @@ class MainActivity : AppCompatActivity() {
             var customStyle = MessageStyle(
                 containerBackgroundColorRes = R.color.info,
                 textColor = Color.CYAN,
-                duration = 5000,
-                showIcon = true,
+                duration = 3000,
+                showIcon = false,
                 iconResource = R.drawable.ic_android_black_24,
-                iconTint = Color.CYAN
+                iconTint = Color.CYAN,
+                animationType = AlertAnimationType.MORPH_FROM_BALL,
+                position = AlertPosition.BOTTOM
             )
-            AlertXToast.showCustomMessage(this, "This is my custom message with custom style", customStyle)
+            AlertXSheet.showCustomMessage(this, "This is my custom message with custom style", customStyle)
         }
 
     }
