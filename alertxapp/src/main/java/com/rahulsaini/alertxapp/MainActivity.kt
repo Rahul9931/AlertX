@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
         var btnError = findViewById<Button>(R.id.btn_error)
         var btnCustom = findViewById<Button>(R.id.btn_custom_msg)
         btnSuccess.setOnClickListener {
-            AlertXSheet.showSuccess(this, "this is my success toast message")
+            AlertXToast.showSuccessToast(this, "this is my success toast message")
                 .setPosition(AlertPosition.BOTTOM)
                 .setAnimation(AlertAnimationType.SLIDE_FROM_VERTICAL)
                 .show()
@@ -39,18 +39,18 @@ class MainActivity : AppCompatActivity() {
         }
 
         btnWarn.setOnClickListener {
-            AlertXSheet.showWarning(this, "this is my warning toast message, this is my warning toast message")
+            AlertXToast.showWarningToast(this, "this is my warning toast message, this is my warning toast message")
                 .setAnimation(AlertAnimationType.SLIDE_FROM_LEFT)
                 .show()
         }
 
         btnInfo.setOnClickListener {
-            AlertXSheet.showInfo(this, "this is my info toast message, this is my info toast message")
+            AlertXToast.showInfoToast(this, "this is my info toast message, this is my info toast message")
                 .show()
         }
 
         btnError.setOnClickListener {
-            AlertXSheet.showError(this, "this is my error toast message, this is my error toast message, this is my error toast message, this is my error toast message")
+            AlertXToast.showErrorToast(this, "this is my error toast message, this is my error toast message, this is my error toast message, this is my error toast message")
                 .setPosition(AlertPosition.BOTTOM)
                 .show()
         }
@@ -66,7 +66,7 @@ class MainActivity : AppCompatActivity() {
                 animationType = AlertAnimationType.MORPH_FROM_BALL,
                 position = AlertPosition.BOTTOM
             )
-            AlertXSheet.showCustomMessage(this, "This is my custom message with custom style", customStyle)
+            AlertXToast.showCustomToast(this, "This is my custom message with custom style", customStyle)
         }
 
     }

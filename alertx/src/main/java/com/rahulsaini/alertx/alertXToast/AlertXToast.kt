@@ -45,7 +45,7 @@ object AlertXToast {
             .setError()
     }
 
-    fun showCustomMessage(activity: Activity, message: String, style: MessageStyle){
+    fun showCustomToast(activity: Activity, message: String, style: MessageStyle){
         AlertBuilder(activity)
             .setMessage(message)
             .setCustomStyle(style)

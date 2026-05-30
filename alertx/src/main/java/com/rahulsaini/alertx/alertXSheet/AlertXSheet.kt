@@ -27,32 +27,32 @@ object AlertXSheet {
     }
 
 // Quick Methods
-    fun showSuccess(activity: Activity, message: String): AlertBuilder{
+    fun showSuccessSheet(activity: Activity, message: String): AlertBuilder{
         return AlertBuilder(activity)
         .setMessage(message)
         .setSuccess()
     }
 
-    fun showWarning(activity: Activity, message: String): AlertBuilder{
+    fun showWarningSheet(activity: Activity, message: String): AlertBuilder{
         return AlertBuilder(activity)
             .setMessage(message)
             .setWarning()
     }
 
-    fun showInfo(activity: Activity, message: String): AlertBuilder{
+    fun showInfoSheet(activity: Activity, message: String): AlertBuilder{
         return AlertBuilder(activity)
             .setMessage(message)
             .setInfo()
     }
 
-    fun showError(activity: Activity, message: String): AlertBuilder{
+    fun showErrorSheet(activity: Activity, message: String): AlertBuilder{
         return AlertBuilder(activity)
             .setMessage(message)
             .setError()
     }
 
 //    custom message for full control of the style
-fun showCustomMessage(activity: Activity, message: String, style: MessageStyle){
+fun showCustomSheet(activity: Activity, message: String, style: MessageStyle){
     AlertBuilder(activity)
         .setMessage(message)
         .setCustomStyle(style)
