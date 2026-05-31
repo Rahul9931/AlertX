@@ -4,28 +4,26 @@ AlertX is a versatile Android library for displaying sleek Toasts and Alerts wit
 
 ## 📺 Demo
 
-<table style="width: 100%; border: none;">
-  <tr>
-    <td align="center" style="border: none;">
-      <b>Alert Sheets</b><br>
-      <video src="https://github.com/user-attachments/assets/8eefa0c4-4213-499c-9222-09bf8507ce15" width="320" muted autoplay loop playsinline style="border-radius: 10px;"></video>
-    </td>
-    <td align="center" style="border: none;">
-      <b>Alert Toasts</b><br>
-      <video src="https://github.com/user-attachments/assets/31007db7-bbf0-4308-ab7e-f65e75f57433" width="320" muted autoplay loop playsinline style="border-radius: 10px;"></video>
-    </td>
-  </tr>
-</table>
+### Alert Sheets
+<p align="center">
+  <video src="https://github.com/user-attachments/assets/8eefa0c4-4213-499c-9222-09bf8507ce15" width="320" muted autoplay loop playsinline></video>
+</p>
+
+### Alert Toasts
+<p align="center">
+  <video src="https://github.com/user-attachments/assets/31007db7-bbf0-4308-ab7e-f65e75f57433" width="320" muted autoplay loop playsinline></video>
+</p>
+
+> **💡 Note:** Videos will autoplay on GitHub because they are muted.
 
 ## ✨ Features
 
 - **Flexible Alerts:** Choose between non-intrusive Toasts or interactive Alerts.
 - **Top & Bottom Support:** All alerts can be shown at the **TOP** or **BOTTOM** of the screen.
 - **Animations:** 
-  - Morph Animation (Transforming ball entry)
-  - Slide Vertical
-  - Vertical Bounce
-  - Slide Left/Right
+  - Morph Animation (Ball-to-Rectangle entry)
+  - Slide Vertical (With optional bounce)
+  - Slide Left/Right (With optional bounce)
   - Zoom & Fade
 - **Standard Types:** Built-in styles for Success, Info, Warning, and Error.
 - **Fully Customizable:** Full control over colors, icons, and duration.
@@ -53,7 +51,7 @@ dependencies {
 ## 🛠 Usage
 
 ### 1. AlertX Toast
-Toasts are used for brief, non-intrusive messages.
+Toasts are perfect for brief, non-intrusive feedback.
 
 ```kotlin
 // Success Toast
@@ -75,7 +73,7 @@ AlertXToast.showErrorToast(this, "Error: Connection failed!")
     .setPosition(AlertPosition.BOTTOM)
     .show()
 
-// Custom Toast
+// Custom Styled Toast
 val customStyle = MessageStyle(
     containerBackgroundColorRes = R.color.custom_bg,
     textColor = Color.WHITE,
@@ -86,7 +84,7 @@ AlertXToast.showCustomToast(this, "Custom Message", customStyle)
 ```
 
 ### 2. AlertX Sheet
-Sheets behave similarly to toasts but use a different layout style and can be positioned anywhere.
+Sheets offer a distinct layout and support all positions and animations.
 
 ```kotlin
 // Success Sheet
@@ -112,7 +110,7 @@ AlertXSheet.showErrorSheet(this, "Error: Something went wrong!")
 
 ## ⚙️ Global Configuration
 
-You can customize the default styles for all toasts and sheets globally in your `Application` class.
+You can customize the default styles for all toasts and sheets globally in your `Application` class. This avoids the need to set styles manually every time you show an alert.
 
 ```kotlin
 class MyApp : Application() {
@@ -144,7 +142,8 @@ class MyApp : Application() {
 - `MORPH_FROM_BALL`
 - `SLIDE_FROM_VERTICAL`
 - `SLIDE_FROM_VERTICAL_BOUNCE`
-- `SLIDE_FROM_LEFT` / `SLIDE_FROM_RIGHT`
+- `SLIDE_FROM_LEFT` / `SLIDE_FROM_LEFT_BOUNCE`
+- `SLIDE_FROM_RIGHT` / `SLIDE_FROM_RIGHT_BOUNCE`
 - `ZOOM`
 - `FADE`
 
