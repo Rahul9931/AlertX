@@ -1,0 +1,54 @@
+package com.rahulsaini.alertx.alertXToast
+
+import android.app.Activity
+import android.app.Application
+import com.rahulsaini.alertx.alertXToast.builder.AlertBuilder
+import com.rahulsaini.alertx.alertXToast.message.ToastAlertMessage
+import com.rahulsaini.alertx.alertXToast.utils.QueueManager
+import com.rahulsaini.alertx.shared.config.GlobalConfig
+import com.rahulsaini.alertx.shared.model.MessageStyle
+
+object AlertXToast {
+    private val globalConfig = GlobalConfig()
+
+    internal fun getGlobalConfig() = globalConfig
+
+    fun initialize(activity: Application, config: GlobalConfig.() -> Unit){
+        globalConfig.apply(config)
+    }
+
+    internal fun enqueue(alertMessage: ToastAlertMessage){
+        QueueManager.enqueue(alertMessage)
+    }
+
+    fun showSuccessToast(activity: Activity, message: String): AlertBuilder{
+        return AlertBuilder(activity)
+            .setMessage(message)
+            .setSuccess()
+    }
+
+    fun showWarningToast(activity: Activity, message: String): AlertBuilder{
+        return AlertBuilder(activity)
+            .setMessage(message)
+            .setWarning()
+    }
+
+    fun showInfoToast(activity: Activity, message: String): AlertBuilder{
+        return AlertBuilder(activity)
+            .setMessage(message)
+            .setInfo()
+    }
+
+    fun showErrorToast(activity: Activity, message: String): AlertBuilder{
+        return AlertBuilder(activity)
+            .setMessage(message)
+            .setError()
+    }
+
+    fun showCustomToast(activity: Activity, message: String, style: MessageStyle){
+        AlertBuilder(activity)
+            .setMessage(message)
+            .setCustomStyle(style)
+            .show()
+    }
+}

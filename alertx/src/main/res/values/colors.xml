@@ -2,7 +2,8 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="success">#FF00FF00</color>
-    <color name="info">#FFC107</color>
-    <color name="error">#FFFF0000</color>
+    <color name="alertx_success">#1ECE1E</color>
+    <color name="alertx_info">#2196F3</color>
+    <color name="alertx_warning">#FFC107</color>
+    <color name="alertx_error">#FF030C</color>
 </resources>

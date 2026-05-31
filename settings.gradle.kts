@@ -22,4 +22,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "AlertX"
 include(":alertx")
-//include(":alertxapp")
+include(":alertxapp")

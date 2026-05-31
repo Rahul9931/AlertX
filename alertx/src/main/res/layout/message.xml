@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<com.google.android.material.card.MaterialCardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/message_container"
+    android:minHeight="120dp"
+    app:cardCornerRadius="0dp"
+    >
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:paddingHorizontal="8dp"
     android:paddingTop="40dp"
     android:paddingBottom="20dp"
@@ -34,14 +40,5 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-<!--<TextView xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--    android:id="@+id/txt_message"-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:layout_height="wrap_content"-->
-<!--    android:text=""-->
-<!--    android:textSize="18sp"-->
-<!--    android:textStyle="bold"-->
-<!--    android:paddingTop="50dp"-->
-<!--    android:paddingBottom="20dp"-->
-<!--    android:paddingHorizontal="20dp"-->
-<!--    />-->
+
+</com.google.android.material.card.MaterialCardView>
