@@ -4,12 +4,9 @@ AlertX is a versatile Android library for displaying sleek Toasts and Alerts wit
 
 ## 📺 Demo
 
-> **Note:** To see the videos, please view this file on **GitHub** or open it in a **Web Browser**. Ensure you have pushed the `media` folder to your repository.
+https://github.com/user-attachments/assets/8eefa0c4-4213-499c-9222-09bf8507ce15
 
-<p align="center">
-  <video src="media/toast_demo.mp4" width="320" muted autoplay loop playsinline></video>
-  <video src="media/sheet_demo.mp4" width="320" muted autoplay loop playsinline></video>
-</p>
+https://github.com/user-attachments/assets/31007db7-bbf0-4308-ab7e-f65e75f57433
 
 ## ✨ Features
 
