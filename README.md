@@ -1,34 +1,28 @@
 # AlertX 🚀
 
-A powerful and highly customizable library for Android to display beautiful Toasts and Alerts with smooth animations. AlertX allows you to show messages at both the **TOP** and **BOTTOM** of the screen.
+AlertX is a versatile Android library for displaying sleek Toasts and Alerts with smooth animations. It supports multiple entry effects and allows you to position messages at both the **TOP** and **BOTTOM** of the screen.
 
 ## 📺 Demo
 
-<table style="width: 100%; border: none;">
-  <tr>
-    <td align="center" style="border: none;">
-      <b>Alert Toasts</b><br>
-      <video src="./media/toast_demo.mp4" width="320" autoplay loop muted playsinline style="border-radius: 10px;"></video>
-    </td>
-    <td align="center" style="border: none;">
-      <b>Alert Sheets</b><br>
-      <video src="./media/sheet_demo.mp4" width="320" autoplay loop muted playsinline style="border-radius: 10px;"></video>
-    </td>
-  </tr>
-</table>
+> **Note:** To see the videos, please view this file on **GitHub** or open it in a **Web Browser**. Ensure you have pushed the `media` folder to your repository.
+
+<p align="center">
+  <video src="media/toast_demo.mp4" width="320" muted autoplay loop playsinline></video>
+  <video src="media/sheet_demo.mp4" width="320" muted autoplay loop playsinline></video>
+</p>
 
 ## ✨ Features
 
 - **Flexible Alerts:** Choose between non-intrusive Toasts or interactive Alerts.
 - **Top & Bottom Support:** All alerts can be shown at the **TOP** or **BOTTOM** of the screen.
 - **Animations:** 
-  - Morph Animation (Transforming ball entry)
+  - Morph Animation
   - Slide Vertical
   - Vertical Bounce
   - Slide Left/Right
   - Zoom & Fade
-- **Pre-styled Types:** Built-in styles for Success, Info, Warning, and Error.
-- **Fully Customizable:** Full control over colors, icons, and duration.
+- **Standard Types:** Built-in styles for Success, Info, Warning, and Error.
+- **Customizable:** Full control over colors, icons, and duration.
 
 ## 🚀 Installation
 
