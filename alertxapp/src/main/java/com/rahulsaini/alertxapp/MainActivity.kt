@@ -23,75 +23,75 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        // --- AlertX Sheet Demo (Only) ---
+        // --- AlertX Sheet Demo ---
 
-        // 1. Morph - TOP (Featured Best Animation)
+        // Morph - TOP
         findViewById<Button>(R.id.btn_sheet_morph).setOnClickListener {
-            AlertXSheet.showInfoSheet(this, "Sheet Morph: Our best animation at the TOP!")
+            AlertXSheet.showInfoSheet(this, "Sheet Morph: Animation at the TOP")
                 .setAnimation(AlertAnimationType.MORPH_FROM_BALL)
                 .setPosition(AlertPosition.TOP)
                 .show()
         }
 
-        // 2. Success - TOP (Slide Vertical)
+        // Success - TOP
         findViewById<Button>(R.id.btn_sheet_success).setOnClickListener {
-            AlertXSheet.showSuccessSheet(this, "Sheet Success: Operation completed successfully!")
+            AlertXSheet.showSuccessSheet(this, "Sheet Success: Message sent at the TOP")
                 .setAnimation(AlertAnimationType.SLIDE_FROM_VERTICAL)
                 .setPosition(AlertPosition.TOP)
                 .show()
         }
 
-        // 3. Info - BOTTOM (Vertical Bounce)
+        // Info - BOTTOM
         findViewById<Button>(R.id.btn_sheet_info).setOnClickListener {
-            AlertXSheet.showInfoSheet(this, "Sheet Info: New update available at the BOTTOM.")
+            AlertXSheet.showInfoSheet(this, "Sheet Info: Update available at the BOTTOM")
                 .setAnimation(AlertAnimationType.SLIDE_FROM_VERTICAL_BOUNCE)
                 .setPosition(AlertPosition.BOTTOM)
                 .show()
         }
 
-        // 4. Warning - TOP (Slide Left)
+        // Warning - TOP
         findViewById<Button>(R.id.btn_sheet_warn).setOnClickListener {
-            AlertXSheet.showWarningSheet(this, "Sheet Warning: Please check your settings (TOP).")
+            AlertXSheet.showWarningSheet(this, "Sheet Warning: Storage almost full (TOP)")
                 .setAnimation(AlertAnimationType.SLIDE_FROM_LEFT)
                 .setPosition(AlertPosition.TOP)
                 .show()
         }
 
-        // 5. Error - BOTTOM (Slide Right)
+        // Error - BOTTOM
         findViewById<Button>(R.id.btn_sheet_error).setOnClickListener {
-            AlertXSheet.showErrorSheet(this, "Sheet Error: Something went wrong (BOTTOM).")
+            AlertXSheet.showErrorSheet(this, "Sheet Error: Connection failed (BOTTOM)")
                 .setAnimation(AlertAnimationType.SLIDE_FROM_RIGHT)
                 .setPosition(AlertPosition.BOTTOM)
                 .show()
         }
 
-        // 6. Zoom - TOP
+        // Zoom - TOP
         findViewById<Button>(R.id.btn_sheet_zoom).setOnClickListener {
-            AlertXSheet.showInfoSheet(this, "Sheet Zoom: Focusing on Top details.")
+            AlertXSheet.showInfoSheet(this, "Sheet Zoom: Focusing on Top details")
                 .setAnimation(AlertAnimationType.ZOOM)
                 .setPosition(AlertPosition.TOP)
                 .show()
         }
 
-        // 7. Fade - BOTTOM
+        // Fade - BOTTOM
         findViewById<Button>(R.id.btn_sheet_fade).setOnClickListener {
-            AlertXSheet.showSuccessSheet(this, "Sheet Fade: Subtle appearance at BOTTOM.")
+            AlertXSheet.showSuccessSheet(this, "Sheet Fade: Subtle appearance at BOTTOM")
                 .setAnimation(AlertAnimationType.FADE)
                 .setPosition(AlertPosition.BOTTOM)
                 .show()
         }
 
-        // 8. Left Bounce - TOP
+        // Left Bounce - TOP
         findViewById<Button>(R.id.btn_sheet_left_bounce).setOnClickListener {
-            AlertXSheet.showWarningSheet(this, "Sheet Left Bounce: Dynamic entry at TOP.")
+            AlertXSheet.showWarningSheet(this, "Sheet Left Bounce: Dynamic entry at TOP")
                 .setAnimation(AlertAnimationType.SLIDE_FROM_LEFT_BOUNCE)
                 .setPosition(AlertPosition.TOP)
                 .show()
         }
 
-        // 9. Right Bounce - BOTTOM
+        // Right Bounce - BOTTOM
         findViewById<Button>(R.id.btn_sheet_right_bounce).setOnClickListener {
-            AlertXSheet.showErrorSheet(this, "Sheet Right Bounce: Dynamic entry at BOTTOM.")
+            AlertXSheet.showErrorSheet(this, "Sheet Right Bounce: Dynamic entry at BOTTOM")
                 .setAnimation(AlertAnimationType.SLIDE_FROM_RIGHT_BOUNCE)
                 .setPosition(AlertPosition.BOTTOM)
                 .show()
