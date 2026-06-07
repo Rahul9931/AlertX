@@ -1,8 +1,9 @@
+import com.vanniktech.maven.publish.SonatypeHost
+
 plugins {
-//    alias(libs.plugins.android.application)
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    id("maven-publish")
+    id("com.vanniktech.maven.publish")
 }
 
 android {
@@ -10,12 +11,7 @@ android {
     compileSdk = 36
 
     defaultConfig {
-//        applicationId = "com.rahulsaini.alertx"
         minSdk = 26
-//        targetSdk = 36
-//        versionCode = 1
-//        versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
@@ -49,16 +45,39 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 }
 
-publishing {
-    publications {
-        register<MavenPublication>("release") {
-            afterEvaluate {
-                from(components["release"])
-//                groupId = "com.github.Rahul9931"
-//                artifactId = "AlertX"
-//                version = "1.0.0"
+mavenPublishing {
+    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
+    signAllPublications()
+    coordinates(
+        groupId = "io.github.rahul9931",
+        artifactId = "alertx",
+        version = "2.0.2"
+    )
 
+    pom {
+        name.set("AlertX")
+        description.set("Android alert library")
+        url.set("https://github.com/Rahul9931/AlertX")
+
+        licenses {
+            license {
+                name.set("MIT License")
+                url.set("https://opensource.org/license/mit/")
             }
+        }
+
+        developers {
+            developer {
+                id.set("Rahul9931")
+                name.set("Rahul Saini")
+                email.set("rahulsainigoku@gmail.com")
+            }
+        }
+        
+        scm {
+            connection.set("scm:git:git://github.com/Rahul9931/AlertX.git")
+            developerConnection.set("scm:git:ssh://github.com/Rahul9931/AlertX.git")
+            url.set("https://github.com/Rahul9931/AlertX")
         }
     }
 }
