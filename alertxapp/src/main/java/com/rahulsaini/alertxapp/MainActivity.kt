@@ -112,8 +112,8 @@ class MainActivity : AppCompatActivity() {
 
         findViewById<Button>(R.id.btn_toast_info).setOnClickListener {
             AlertXToast.showInfoToast(this, "Toast Info: Update available at the BOTTOM")
-                .setAnimation(AlertAnimationType.SLIDE_FROM_VERTICAL_BOUNCE)
-                .setPosition(AlertPosition.BOTTOM)
+//                .setAnimation(AlertAnimationType.SLIDE_FROM_VERTICAL_BOUNCE)
+//                .setPosition(AlertPosition.BOTTOM)
                 .show()
         }
 
