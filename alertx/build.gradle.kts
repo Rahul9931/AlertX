@@ -51,7 +51,7 @@ mavenPublishing {
     coordinates(
         groupId = "io.github.rahul9931",
         artifactId = "alertx",
-        version = "2.0.2"
+        version = "2.0.3"
     )
 
     pom {
